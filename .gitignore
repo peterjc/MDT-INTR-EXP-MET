@@ -1,22 +1,13 @@
-venv/
-*.sqlite3
-__pycache__/
-*.otreezip
-*.zip
-*.tar.gz
-
-#Ignore backup files from some editors,
+venv
+staticfiles
+./db.sqlite3
+.idea
 *~
-*.swp
-*.bak
-*#
-*/.#*
-
-#Ignore patches and any original files created by patch command
-*.diff
-*.patch
-*.orig
-*.rej
-
-#Ignore these hidden files from Mac OS X
+*.sqlite3
+_static_root
+_bots*s
+__temp*
+__pycache__/
+*.py[cod]
 .DS_Store
+*.otreezip
