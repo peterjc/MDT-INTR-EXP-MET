@@ -1,0 +1,12 @@
+{{ block title }}Round {{ subsession.round_number }}{{ endblock }}
+{{ block content }}
+
+This is round {{ subsession.round_number }} of {{ session.num_rounds }}.
+
+Do you volunteer for this round?
+
+{{ formfields }}
+
+{{ next_button }}
+
+{{ endblock }}
