@@ -14,15 +14,19 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     name = models.StringField(label='What is your name?')
     age = models.IntegerField(label='What is your age?', min=18)
-    volunteer = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], initial=False, label='Do you volunteer?', widget=widgets.RadioSelectHorizontal)
+    volunteer = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], initial=False, label='Do you volunteer?')
     submission_timestamp = models.FloatField()
 class Survey(Page):
     form_model = 'player'
     form_fields = ['name', 'age']
-class Results(Page):
-    form_model = 'player'
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 class Instructions(Page):
     form_model = 'player'
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 class Volunteering(Page):
     form_model = 'player'
     form_fields = ['volunteer']
@@ -32,4 +36,6 @@ class Volunteering(Page):
     def before_next_page(player, timeout_happened):
         import time  # hack, want this at top level really
         player.submission_timestamp = time.time()
-page_sequence = [Survey, Results, Instructions, Volunteering]
+class Results(Page):
+    form_model = 'player'
+page_sequence = [Survey, Instructions, Volunteering, Results]

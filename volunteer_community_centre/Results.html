@@ -1,8 +1,9 @@
 {{ block title }}Results{{ endblock }}
 {{ block content }}
 
-Your name is {{ player.name }} and your age is {{ player.age }} years.
-
+<p>
+You {{ if player.volunteer }}volunteered{{ else }}did not volunteer{{ endif }}.
+</p>
 {{ next_button }}
 
 {{ endblock }}

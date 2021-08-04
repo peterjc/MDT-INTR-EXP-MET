@@ -1,12 +1,11 @@
 {{ block title }}Round {{ subsession.round_number }}{{ endblock }}
 {{ block content }}
 
+<p>
 This is round {{ subsession.round_number }} of {{ Constants.num_rounds }}.
+</p>
+<button name="volunteer" value="True">Volunteer</button>
+<!-- No next button, if don't volunteer wait for timeout -->
 
-Do you volunteer for this round?
-
-{{ formfields }}
-
-{{ next_button }}
 
 {{ endblock }}
