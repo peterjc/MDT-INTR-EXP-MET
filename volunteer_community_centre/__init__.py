@@ -38,4 +38,19 @@ class Volunteering(Page):
         player.submission_timestamp = time.time()
 class Results(Page):
     form_model = 'player'
+    @staticmethod
+    def vars_for_template(player):
+        session = player.session
+        subsession = player.subsession
+        group = player.group
+        # Rules and payoff depend on round...
+        # Was this player first to volunteer?
+        players = subsession.get_players()
+        if not any(p.volunteer for p in players):
+            msg = "No one in your group volunteered."
+        elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
+            msg = "You volunteered first."
+        else:
+            msg = "At least one person in your group volunteered first."
+        return {"message": msg}
 page_sequence = [Survey, Instructions, Volunteering, Results]
