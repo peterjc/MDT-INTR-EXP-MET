@@ -34,6 +34,14 @@ class Volunteering(Page):
     timer_text = 'You have 15 seconds to decide.'
     @staticmethod
     def before_next_page(player, timeout_happened):
+        participant = player.participant
+        if player.round_number == 1:
+            # Record the name on the long lived participant object
+            participant.name = player.name
+        else:
+            # Pull back the name (since only asking once)
+            player.name = participant.name
+        
         import time  # hack, want this at top level really
         player.submission_timestamp = time.time()
 class Results(Page):
