@@ -10,7 +10,7 @@ This repository contains assorted "Economics Experiments" created at the
 interactive tasks.
 
 Our initial work was funded by the `Macaulay Development Trust
-<https://www.macaulaydevelopmenttrust.org/>`__ under as project
+<https://www.macaulaydevelopmenttrust.org/>`__ under project
 MDT-INTR-EXP-MET.
 
 Currently these examples were created and revised within the `oTree Studio
