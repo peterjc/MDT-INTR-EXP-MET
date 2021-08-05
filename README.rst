@@ -41,4 +41,4 @@ a production server (with ``otree prodserver``).
 Or, to run on the cloud, the example directory must be re-compressed (via
 ``otree zip``) and can then be uploaded to `oTree Hub
 <https://www.otreehub.com/my_projects/>`__ for deployment on Heroku (which
-you must pay for). 
+you must pay for).
