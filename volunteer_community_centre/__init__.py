@@ -88,17 +88,40 @@ class Results(Page):
         msg = "<p>Thanks for making your choice.</p>"
         # Was this player first to volunteer?
         players = subsession.get_players()
-        if not any(p.volunteer for p in players):
-            msg += "<p>No one in your group volunteered.</p>"
-        elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
-            msg += "<p>You volunteered first.</p>"
+        if player.round_number in [1, 2, 5]:
+            # Initial rules - self-less volunteer
+            volunteer_payoff = 0
+            group_payoff = 50
+            if not any(p.volunteer for p in players):
+                player.payoff = 0
+                msg += f"<p>No one in your group volunteered. You earned {player.payoff} tokens.</p>"
+            elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
+                player.payoff = 0
+                msg += f"<p>You volunteered first. You earn {player.payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
+            else:
+                player.payoff = group_payoff
+                msg += f"<p>At least one person in your group volunteered first. You earn {player.payoff} tokens.</p>"
+        elif player.round_number in [3, 4]:
+            # Alternative rules - compensated volunteer
+            volunteer_payoff = 50
+            group_payoff = 40
+            if not any(p.volunteer for p in players):
+                player.payoff = 0
+                msg += f"<p>No one in your group volunteered. You earned {player.payoff} tokens.</p>"
+            elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
+                player.payoff = volunteer_payoff
+                msg += f"<p>You volunteered. You earn {player.payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
+            else:
+                player.payoff = group_payoff
+                msg += f"<p>At least one person in your group volunteered. You earn {player.payoff} tokens, and the person who volunteered first earns {volunteer_payoff} tokens.</p>"
         else:
-            msg += "<p>At least one person in your group volunteered first.</p>"
+            raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
         if player.round_number == 1:
             msg += """
         <p>Now we will play a second round of the game, which will follow exactly the same rules of this one. The second round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
         """
         elif player.round_number == 2:
+            # TODO - pull scores from code?
             msg += """
         <p>Now we will play a third round of the game, which will follow slightly different rules. Again, at least one person in your group needs to volunteer in order for you to earn some tokens, meaning that if no one volunteers, no one will earn any tokens. However, in this third round the volunteer will earn 50 tokens, while the other participants will earn 40 tokens. Only the participant who will volunteer first will earn the 50 tokens; if you decide to volunteer but someone else has volunteered before you, you will earn 40 tokens. This is because the volunteer will have to pay 50 tokens, but all of the other participants will transfer 10 of their 50 tokens to the volunteer. Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tides up afterwards.</p>
         <p>Do you have any questions? If so, please raise your hand virtually. A member of the experimental team will answer your question for everyone.</p>
@@ -109,8 +132,9 @@ class Results(Page):
         <p>Now we will play a fourth round of the game, which will follow exactly the same rules of the third one. The fourth round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
         """
         elif player.round_number == 4:
+            # TODO - pull scores from code?
             msg += """
-        <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens. If at least one participant volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus will not earn any tokens. Those who will possibly volunteer after them will earn 50 tokens. If no one volunteers, no one will earn any token. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
+        <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens. If at least one participant volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus overall will not earn any tokens. Anyone who volunteers after them will earn 50 tokens. If no one volunteers, no one will earn any tokens. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
         <p>The final round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.</p>
         """
         elif player.round_number == 5:
@@ -118,6 +142,6 @@ class Results(Page):
         <p>The game session has finished. Please click on the "Next" button below, and you will be redirected to a short questionnaire, after which you will be communicated your earnings.</p>
         """
         else:
-            msg += f"<p>ERROR - unexpected round number {player.round_number}</p>"
+            raise RuntimeError(f"ERROR - unexpected round number {player.round_number}")
         return {"message": msg}
 page_sequence = [Survey, Instructions, Volunteering, Results]
