@@ -1,0 +1,39 @@
+# pre-commit run --all-files
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-executables-have-shebangs
+        files: \.(py|sh)$
+    -   id: check-json
+    -   id: debug-statements
+    -   id: mixed-line-ending
+    -   id: trailing-whitespace
+        files: \.(sh|rst|yml|yaml)$
+-   repo: local
+    hooks:
+    -   id: no-tabs
+        name: No tabs
+        description: Reject any files containing a tab
+        entry: '\t'
+        language: pygrep
+        files: \.(py|sh|rst|yml|yaml)$
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.1
+    hooks:
+    -   id: flake8
+        additional_dependencies: [
+            'flake8-blind-except',
+            'flake8-bugbear',
+            'flake8-sfs',
+            'flake8-pie',
+            'flake8-implicit-str-concat',
+         ]
+-   repo: https://github.com/myint/rstcheck
+    rev: 3f92957478422df87bd730abde66f089cc1ee19b
+    hooks:
+    -   id: rstcheck
+        args: [
+            --report=warning,
+        ]

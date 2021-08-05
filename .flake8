@@ -1,0 +1,18 @@
+[flake8]
+doctests = True
+extend-ignore =
+    # Can't control oTree Studio output:
+    E301,
+    E302,
+    E305,
+    E501,
+    F403,
+    F405,
+    F841,
+    W292,
+    W293,
+    W391,
+    # Can't use black with oTree Studio:
+    BLK,
+    # We like f-strings
+    SFS301,
