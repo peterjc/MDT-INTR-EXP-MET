@@ -44,13 +44,13 @@ class Instructions(Page):
         The computer will pair you with other {Constants.players_per_group - 1} participants, making a group of {Constants.players_per_group}. The group will remain the same during the {Constants.num_rounds} rounds. In each round, each of the members of your group has the opportunity to earn 50 tokens. In order for the members of your group to earn the 50 tokens, at least one of you needs to "volunteer". The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens in that round. You will have {Constants.volunteer_timeout} seconds to decide whether to volunteer. If at least one participant in your group volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus will not earn any token. Those who will possibly volunteer after them will receive 50 tokens. If no one volunteers, no one will earn any token. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of that round. You will be communicated whether anyone has volunteered, and your total earnings in that round. You will not know the identity of the person who has volunteered.
         </p>
         <p>
-        Imagine that the six people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre generate a benefit to the residents attending, which we quantify in 50 tokens, while the volunteers incur in personal costs in terms of time and energy.
+        Imagine that the {Constants.num_rounds} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre generate a benefit to the residents attending, which we quantify in 50 tokens, while the volunteers incur in personal costs in terms of time and energy.
         </p>
         <p>
         Do you have any questions? If so, please raise your hand virtually.
         </p>
         <p>
-        Now we will play the first round of the game. The countdown will start once all the six members of your group have clicked the "Next" button below. To volunteer, you need to click on the "Volunteer" button at the centre of the page. Regardless of your choice, you will have to wait until the end of the {Constants.volunteer_timeout} seconds. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.
+        Now we will play round {player.round_number} of the game. The countdown will start once all {Constants.num_rounds} members of your group have clicked the "Next" button below. To volunteer, you need to click on the "Volunteer" button at the centre of the page. Regardless of your choice, you will have to wait until the end of the {Constants.volunteer_timeout} seconds. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.
         </p>
         """
         else:
@@ -83,14 +83,41 @@ class Results(Page):
         session = player.session
         subsession = player.subsession
         group = player.group
+        participant = player.participant
         # Rules and payoff depend on round...
+        msg = "<p>Thanks for making your choice.</p>"
         # Was this player first to volunteer?
         players = subsession.get_players()
         if not any(p.volunteer for p in players):
-            msg = "No one in your group volunteered."
+            msg += "<p>No one in your group volunteered.</p>"
         elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
-            msg = "You volunteered first."
+            msg += "<p>You volunteered first.</p>"
         else:
-            msg = "At least one person in your group volunteered first."
+            msg += "<p>At least one person in your group volunteered first.</p>"
+        if player.round_number == 1:
+            msg += """
+        <p>Now we will play a second round of the game, which will follow exactly the same rules of this one. The second round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
+        """
+        elif player.round_number == 2:
+            msg += """
+        <p>Now we will play a third round of the game, which will follow slightly different rules. Again, at least one person in your group needs to volunteer in order for you to earn some tokens, meaning that if no one volunteers, no one will earn any tokens. However, in this third round the volunteer will earn 50 tokens, while the other participants will earn 40 tokens. Only the participant who will volunteer first will earn the 50 tokens; if you decide to volunteer but someone else has volunteered before you, you will earn 40 tokens. This is because the volunteer will have to pay 50 tokens, but all of the other participants will transfer 10 of their 50 tokens to the volunteer. Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tides up afterwards.</p>
+        <p>Do you have any questions? If so, please raise your hand virtually. A member of the experimental team will answer your question for everyone.</p>
+        <p>The third round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page</p>
+        """
+        elif player.round_number == 3:
+            msg += """
+        <p>Now we will play a fourth round of the game, which will follow exactly the same rules of the third one. The fourth round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
+        """
+        elif player.round_number == 4:
+            msg += """
+        <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens. If at least one participant volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus will not earn any tokens. Those who will possibly volunteer after them will earn 50 tokens. If no one volunteers, no one will earn any token. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
+        <p>The final round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.</p>
+        """
+        elif player.round_number == 5:
+            msg += """
+        <p>The game session has finished. Please click on the "Next" button below, and you will be redirected to a short questionnaire, after which you will be communicated your earnings.</p>
+        """
+        else:
+            msg += f"<p>ERROR - unexpected round number {player.round_number}</p>"
         return {"message": msg}
 page_sequence = [Survey, Instructions, Volunteering, Results]
