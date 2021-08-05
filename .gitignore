@@ -2,6 +2,8 @@ venv/
 *.sqlite3
 __pycache__/
 *.otreezip
+*.zip
+*.tar.gz
 
 #Ignore backup files from some editors,
 *~
