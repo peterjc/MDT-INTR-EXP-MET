@@ -13,16 +13,8 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 class Player(BasePlayer):
-    name = models.StringField(label='What is your name?')
-    age = models.IntegerField(label='What is your age?', min=18)
     volunteer = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], initial=False, label='Do you volunteer?')
     submission_timestamp = models.FloatField()
-class Survey(Page):
-    form_model = 'player'
-    form_fields = ['name', 'age']
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
 class Instructions(Page):
     form_model = 'player'
     @staticmethod
@@ -65,14 +57,6 @@ class Volunteering(Page):
     timer_text = 'You have 15 seconds to decide.'
     @staticmethod
     def before_next_page(player, timeout_happened):
-        participant = player.participant
-        if player.round_number == 1:
-            # Record the name on the long lived participant object
-            participant.name = player.name
-        else:
-            # Pull back the name (since only asking once)
-            player.name = participant.name
-        
         import time  # hack, want this at top level really
         player.submission_timestamp = time.time()
     @staticmethod
@@ -146,4 +130,4 @@ class Results(Page):
         else:
             raise RuntimeError(f"ERROR - unexpected round number {player.round_number}")
         return {"message": msg}
-page_sequence = [Survey, Instructions, WaitToStart, Volunteering, Results]
+page_sequence = [Instructions, WaitToStart, Volunteering, Results]
