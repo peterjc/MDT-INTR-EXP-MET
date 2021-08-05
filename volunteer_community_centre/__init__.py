@@ -56,6 +56,8 @@ class Instructions(Page):
         else:
             msg = f"ERROR - Invalid round number {player.round_number}"
         return {"instructions": msg}
+class WaitToStart(WaitPage):
+    title_text = 'Waiting for other players to begin'
 class Volunteering(Page):
     form_model = 'player'
     form_fields = ['volunteer']
@@ -144,4 +146,4 @@ class Results(Page):
         else:
             raise RuntimeError(f"ERROR - unexpected round number {player.round_number}")
         return {"message": msg}
-page_sequence = [Survey, Instructions, Volunteering, Results]
+page_sequence = [Survey, Instructions, WaitToStart, Volunteering, Results]
