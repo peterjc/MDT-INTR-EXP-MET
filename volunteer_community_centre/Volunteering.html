@@ -6,6 +6,17 @@ This is round {{ subsession.round_number }} of {{ Constants.num_rounds }}.
 </p>
 <button name="volunteer" value="True">Volunteer</button>
 <!-- No next button, if don't volunteer wait for timeout -->
+<p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Review Instructions
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Click the button to volunteer, or wait for the timer to finish.
+  </div>
+</div>
+
 
 
 {{ endblock }}
