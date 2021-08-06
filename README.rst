@@ -20,7 +20,8 @@ exported to record the changes under git version control. You can download
 ``.otreezip``, but you cannot upload (import) back into oTree Studio.
 
 We unzip these files to track changes to the internal files including
-``.html`` templates and ``.py`` Python code.
+``.html`` templates and ``.py`` Python code. See ``CONTRIBUTING.rst`` for more
+details.
 
 
 Installation
