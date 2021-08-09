@@ -1,0 +1,31 @@
+{{ block title }}Decision{{ endblock }}
+{{ block content }}
+
+<p>Which lottery do you prefer to play – A or B? Please make 10 choices. Remember that only one of the decisions will be randomly selected for execution.</p>
+
+{{ comment }}
+This for loop over lottery1, ..., lottery10 depends on accessing the number 1, ..., 10 as field.label.text
+{{ endcomment }}
+<table class="table">
+    <thead><th>#</th><th>Red/white ratio</th><th>Lottery A or B?</th></thead>
+    {{ for field in form }}
+        <tr>
+            <th>#{{ field.label }}</th>
+            <td><img height="100" src="/static/risk_attitude/{{ field.name }}red.png" alt="Picture of 10 ball lottery with {{ field.label.text }} red ball(s)" /></td>
+            <td>
+                <p>
+                <input class="form-check-input" type="radio" id="id_{{ field.name }}-0" name="{{ field.name }}" value="True">
+                A: Red = 100, White = 80
+                <br />
+                <input class="form-check-input" type="radio" id="id_{{ field.name }}-1" name="{{ field.name }}" value="False">
+                B: Red = 190, White = 5
+                </p>
+                {{ formfield_errors field.name }}
+            </td>
+        </tr>
+    {{ endfor }}
+</table>
+
+{{ next_button }}
+
+{{ endblock }}
