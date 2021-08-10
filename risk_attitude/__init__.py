@@ -12,16 +12,16 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 class Player(BasePlayer):
-    lottery1 = models.BooleanField(label='1')
-    lottery2 = models.BooleanField(label='2')
-    lottery3 = models.BooleanField(label='3')
-    lottery4 = models.BooleanField(label='4')
-    lottery5 = models.BooleanField(label='5')
-    lottery6 = models.BooleanField(label='6')
-    lottery7 = models.BooleanField(label='7')
-    lottery8 = models.BooleanField(label='8')
-    lottery9 = models.BooleanField(label='9')
-    lottery10 = models.BooleanField(label='10')
+    lottery1 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='1')
+    lottery2 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='2')
+    lottery3 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='3')
+    lottery4 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='4')
+    lottery5 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='5')
+    lottery6 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='6')
+    lottery7 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='7')
+    lottery8 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='8')
+    lottery9 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='9')
+    lottery10 = models.BooleanField(choices=[[True, 'A: Red = 100, White = 80'], [False, 'B: Red = 190, White = 5']], label='10')
 class Introduction(Page):
     form_model = 'player'
 class LotteryInstructions(Page):
