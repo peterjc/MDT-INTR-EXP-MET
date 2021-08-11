@@ -81,13 +81,13 @@ class Results(Page):
             group_payoff = 50
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {player.payoff} tokens.</p>"
+                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff} tokens.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
-                msg += f"<p>You volunteered first. You earn {player.payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
+                msg += f"<p>You volunteered first. You earn {volunteer_payoff} tokens and the other members of your group earn {group_payoff}.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>At least one person in your group volunteered first. You earn {player.payoff} tokens.</p>"
+                msg += f"<p>At least one person in your group volunteered first. You earn {group_payoff} tokens.</p>"
         elif player.round_number in [3, 4]:
             # Alternative rules - compensated volunteer
             no_volunteers_payoff = 0
@@ -95,13 +95,13 @@ class Results(Page):
             group_payoff = 40
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {player.payoff} tokens.</p>"
+                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff} tokens.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
-                msg += f"<p>You volunteered. You earn {player.payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
+                msg += f"<p>You volunteered. You earn {volunteer_payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>At least one person in your group volunteered. You earn {player.payoff} tokens, and the person who volunteered first earns {volunteer_payoff} tokens.</p>"
+                msg += f"<p>At least one person in your group volunteered. You earn {group_payoff} tokens, and the person who volunteered first earns {volunteer_payoff} tokens.</p>"
         else:
             raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
         if player.round_number == 1:
