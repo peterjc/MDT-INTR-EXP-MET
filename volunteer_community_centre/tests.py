@@ -10,5 +10,7 @@ class PlayerBot(Bot):
         # yield WaitToStart <-- automatic
         yield Volunteering, {"volunteer": False}
         expect("<p>Thanks for making your choice.</p>", "in", self.html)
-        expect("No one in your group volunteered. You earned 0 tokens.", 'in', self.html)
+        expect(
+            "No one in your group volunteered. You earned 0 tokens.", "in", self.html
+        )
         yield Results

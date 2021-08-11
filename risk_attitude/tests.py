@@ -23,5 +23,5 @@ class PlayerBot(Bot):
         #
         # Player ID seems to be an autoincrement linked to past DB usage, so
         # if tests run with just 6 players only a subset of thresholds used!
-        threshold = (self.player.id % 11)  # i.e. 0, 1, ..., 10 inclusive
+        threshold = self.player.id % 11  # i.e. 0, 1, ..., 10 inclusive
         yield LotteryDecision, {f"lottery{i+1}": (i >= threshold) for i in range(10)}
