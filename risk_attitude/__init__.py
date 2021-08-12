@@ -73,6 +73,6 @@ class LotteryDecision(Page):
             "lottery_red": lottery_red,
             "lottery_selected": lottery_selected,
             "lottery_choice": lottery_choice,
-            "lottery_payoff": player.payoff
+            "lottery_payoff": int(player.payoff)
         }
 page_sequence = [Introduction, LotteryInstructions, LotteryDecision]

@@ -47,7 +47,22 @@ class Payments(Page):
             f"meaning that you earned {lottery_payoff} tokens"
         )
         
+        # The volunteer_community_centre app recorded a list of payoffs for use here:
+        interactive_payoffs = participant.volunteer_community_centre
+        assert len(interactive_payoffs) == 5
+        interactive_msg = (
+            f"In the interactive game, you played {len(interactive_payoffs)} rounds. "
+            f"You earned {interactive_payoffs[0]} tokens in the first round, "
+            f"{interactive_payoffs[1]} tokens in the second round, "
+            f"{interactive_payoffs[2]} tokens in the third round, "
+            f"{interactive_payoffs[3]} tokens in the fourth round, "
+            f"and {interactive_payoffs[4]} tokens in the fifth round, "
+            f"for a total of {sum(interactive_payoffs)} tokens."
+        )
+        
         return {
             "lottery_msg": lottery_msg,
+            "interactive_msg": interactive_msg,
+            "payoff_int": int(participant.payoff),  # avoid adding word "points"
         }
 page_sequence = [Questionnaire, Payments]

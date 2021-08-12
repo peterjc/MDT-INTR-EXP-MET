@@ -104,6 +104,12 @@ class Results(Page):
                 msg += f"<p>Another person in your group volunteered first. You earn {group_payoff} tokens, and the person who volunteered first earns {volunteer_payoff} tokens.</p>"
         else:
             raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
+        
+        # Now record the payoff for use in later app to report the payoff breakdown:
+        if player.round_number == 1:
+            participant.volunteer_community_centre = [None] * Constants.num_rounds
+        participant.volunteer_community_centre[player.round_number - 1] = int(player.payoff)
+        
         if player.round_number == 1:
             msg += """
         <p>Now we will play a second round of the game, which will follow exactly the same rules of this one. The second round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
