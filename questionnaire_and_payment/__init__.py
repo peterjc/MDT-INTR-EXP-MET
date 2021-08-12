@@ -27,4 +27,27 @@ class Questionnaire(Page):
     form_fields = ['sid', 'age', 'gender', 'residence', 'years_service', 'people_known', 'lottery_understanding', 'interative_understanding', 'interactive_others', 'volunteer_work']
 class Payments(Page):
     form_model = 'player'
+    @staticmethod
+    def vars_for_template(player):
+        participant = player.participant
+        # The risk_attitude app recorded a dict for values for use here:
+        lottery_selected = participant.risk_attitude["lottery_selected"]
+        lottery_color = "red" if participant.risk_attitude["lottery_red"] else "white"
+        lottery_choice = "A" if participant.risk_attitude["lottery_choice"] else "B"
+        lottery_payoff = participant.risk_attitude["lottery_payoff"]
+        
+        lottery_msg = (
+            f"In the lottery game, the computer picked lottery {lottery_selected}. "
+            f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
+            f"meaning that you could earn {100 if lottery_choice else 190} tokens "
+            f"with {10 * lottery_selected}% probability, "
+            f"and {80 if lottery_choice else 5} tokens "
+            f"with {100 - 10 * lottery_selected}% probability. "
+            f"The computer extracted a {lottery_color} ball, "
+            f"meaning that you earned {lottery_payoff} tokens"
+        )
+        
+        return {
+            "lottery_msg": lottery_msg,
+        }
 page_sequence = [Questionnaire, Payments]

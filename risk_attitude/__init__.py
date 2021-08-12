@@ -37,15 +37,15 @@ class LotteryDecision(Page):
     form_fields = ['lottery1', 'lottery2', 'lottery3', 'lottery4', 'lottery5', 'lottery6', 'lottery7', 'lottery8', 'lottery9', 'lottery10']
     @staticmethod
     def before_next_page(player, timeout_happened):
+        participant = player.participant
         # Will now randomly pick one of the 10 lotteries,
         # randomly pick a red or white ball, and apply A/B payoffs
-        # Record the random selections for use in the test suite.
         import random  # TODO - import at top level if possible
-        player.lottery_selected = random.randint(1, 10)
+        lottery_selected = random.randint(1, 10)
         # Run the lottery, red (i balls) or white (10-i balls)?
-        player.lottery_red = random.randint(1, 10) <= player.lottery_selected
+        lottery_red = random.randint(1, 10) <= lottery_selected
         # There ought to be a built in list of fields to avoid this lookup:
-        if [
+        lottery_choice = bool([
             player.lottery1,
             player.lottery2,
             player.lottery3,
@@ -56,11 +56,23 @@ class LotteryDecision(Page):
             player.lottery8,
             player.lottery9,
             player.lottery10,
-        ][player.lottery_selected - 1]:
+        ][lottery_selected - 1])
+        if lottery_choice:
             # Apply A scores
-            player.payoff = Constants.payoff_red_A if player.lottery_red else Constants.payoff_white_A
+            player.payoff = Constants.payoff_red_A if lottery_red else Constants.payoff_white_A
         else:
             # Apply B scores
-            player.payoff = Constants.payoff_red_B if player.lottery_red else Constants.payoff_white_B
+            player.payoff = Constants.payoff_red_B if lottery_red else Constants.payoff_white_B
         
+        # Record in the player fields for logging in the DB
+        player.lottery_selected = lottery_selected
+        player.lottery_red = lottery_red
+        
+        # Finally, record this in participant.risk_attitude for the final app report
+        participant.risk_attitude = {
+            "lottery_red": lottery_red,
+            "lottery_selected": lottery_selected,
+            "lottery_choice": lottery_choice,
+            "lottery_payoff": player.payoff
+        }
 page_sequence = [Introduction, LotteryInstructions, LotteryDecision]

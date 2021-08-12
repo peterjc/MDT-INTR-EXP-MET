@@ -27,12 +27,16 @@ class PlayerBot(Bot):
         yield LotteryDecision, {f"lottery{i+1}": (i < threshold) for i in range(10)}
 
         expect(self.participant.payoff, self.player.payoff)  # first game/app
-        expect(self.player.lottery_selected, ">=", 1)
-        expect(self.player.lottery_selected, "<=", 10)
+        lottery_selected = self.participant.risk_attitude["lottery_selected"]
+        lottery_red = self.participant.risk_attitude["lottery_red"]
+        expect(lottery_selected, ">=", 1)
+        expect(lottery_selected, "<=", 10)
+        expect(lottery_selected, self.player.lottery_selected)
+        expect(lottery_red, self.player.lottery_red)
 
-        if threshold < self.player.lottery_selected:
+        if threshold < lottery_selected:
             # B was picked
-            expect(self.player.payoff, 190 if self.player.lottery_red else 5)
+            expect(self.player.payoff, 190 if lottery_red else 5)
         else:
             # A was picked
-            expect(self.player.payoff, 100 if self.player.lottery_red else 80)
+            expect(self.player.payoff, 100 if lottery_red else 80)
