@@ -35,9 +35,9 @@ written in Python, and so `oTree is distributed on PyPI
 
    $ pip install otree
 
-Then change directory to one of our examples, and run either a development
-server (with additional debugging information via ``otree devserver``), or
-a production server (with ``otree prodserver``).
+Then change directory to a copy of this repository, and run a development
+server (with additional debugging information via ``otree devserver``), or a
+production server (with ``otree prodserver``).
 
 Or, to run on the cloud, the example directory must be re-compressed (via
 ``otree zip``) and can then be uploaded to `oTree Hub
