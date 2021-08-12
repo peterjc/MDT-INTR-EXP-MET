@@ -6,12 +6,14 @@ Development process
 
 This experiment is written within the web-based oTree Studio environment. Any
 changes are exported as a tar-ball named ``*-MDT-INTR-EXP-MET.otreezip`` (with
-a random three letter prefix), which we unzip and check into version control:
+a random three letter prefix), which we unzip, test, and check into version
+control:
 
 .. code:: console
 
     $ tar -zxvf ~/Downloads/*-MDT-INTR-EXP-MET.otreezip && \
       rm ~/Downloads/*-MDT-INTR-EXP-MET.otreezip
+    $ otree test
     $ git commit . -m "Changes from oTree Studio"
 
 Beware that additional care is needed if any of the folder names have changed
