@@ -1,4 +1,4 @@
-from otree.api import Bot
+from otree.api import Bot, expect
 
 from . import Questionnaire, Payments
 
@@ -17,4 +17,10 @@ class PlayerBot(Bot):
             "interactive_others": "Difficult to say",
             "volunteer_work": "No",
         }
+        expect(
+            "<p>Thank you again for taking part in this experimental session today.</p>",
+            "in",
+            self.html,
+        )
+        assert "points" not in str(self.html), "Oops - points not tokens"
         yield Payments
