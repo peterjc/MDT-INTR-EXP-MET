@@ -55,6 +55,14 @@ class Player(BasePlayer):
     lottery_red = models.BooleanField()
 class Introduction(Page):
     form_model = 'player'
+    @staticmethod
+    def vars_for_template(player):
+        session = player.session
+        from otree.settings import REAL_WORLD_CURRENCY_CODE
+        from otree.currency import RealWorldCurrency
+        factor = cu(1 / player.session.config['real_world_currency_per_point'])
+        rate = f"{REAL_WORLD_CURRENCY_CODE} at a rate of {RealWorldCurrency(1)} per every {factor}"
+        return {"rate": rate}
 class LotteryInstructions(Page):
     form_model = 'player'
 class LotteryDecision(Page):

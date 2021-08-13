@@ -5,6 +5,16 @@ from . import Introduction, LotteryInstructions, LotteryDecision
 
 class PlayerBot(Bot):
     def play_round(self):
+        expect(
+            "You will receive £5.00 to thank you for your participation today.",
+            "in",
+            self.html,
+        )
+        expect(
+            "into GBP at a rate of £1.00 per every 20 points.",
+            "in",
+            self.html,
+        )
         yield Introduction
         yield LotteryInstructions
         # Risk averse people should always pick A, risk taking ones B,
