@@ -15,17 +15,42 @@ class Subsession(BaseSubsession):
     pass
 class Group(BaseGroup):
     pass
+def lottery_choices(player):
+    return [
+        [True, f'A: 🔴 = {Constants.payoff_red_A}, ⚪ = {Constants.payoff_white_A}'],
+        [False, f'B: 🔴 = {Constants.payoff_red_B}, ⚪ = {Constants.payoff_white_B}']
+    ]
+def lottery1_choices(player):
+    return lottery_choices(player)
+def lottery2_choices(player):
+    return lottery_choices(player)
+def lottery3_choices(player):
+    return lottery_choices(player)
+def lottery4_choices(player):
+    return lottery_choices(player)
+def lottery5_choices(player):
+    return lottery_choices(player)
+def lottery6_choices(player):
+    return lottery_choices(player)
+def lottery7_choices(player):
+    return lottery_choices(player)
+def lottery8_choices(player):
+    return lottery_choices(player)
+def lottery9_choices(player):
+    return lottery_choices(player)
+def lottery10_choices(player):
+    return lottery_choices(player)
 class Player(BasePlayer):
-    lottery1 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='1')
-    lottery2 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='2')
-    lottery3 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='3')
-    lottery4 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='4')
-    lottery5 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='5')
-    lottery6 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='6')
-    lottery7 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='7')
-    lottery8 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='8')
-    lottery9 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='9')
-    lottery10 = models.BooleanField(choices=[[True, 'A: 🔴 = 100, ⚪ = 80'], [False, 'B: 🔴 = 190, ⚪ = 5']], label='10')
+    lottery1 = models.BooleanField(label='1')
+    lottery2 = models.BooleanField(label='2')
+    lottery3 = models.BooleanField(label='3')
+    lottery4 = models.BooleanField(label='4')
+    lottery5 = models.BooleanField(label='5')
+    lottery6 = models.BooleanField(label='6')
+    lottery7 = models.BooleanField(label='7')
+    lottery8 = models.BooleanField(label='8')
+    lottery9 = models.BooleanField(label='9')
+    lottery10 = models.BooleanField(label='10')
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
 class Introduction(Page):
