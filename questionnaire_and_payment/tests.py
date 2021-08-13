@@ -17,10 +17,6 @@ class PlayerBot(Bot):
             "interactive_others": "Difficult to say",
             "volunteer_work": "No",
         }
-        expect(
-            "<p>Thank you again for taking part in this experimental session today.</p>",
-            "in",
-            self.html,
-        )
-        assert "points" not in str(self.html), "Oops - points not tokens"
+        expect("<p>Thank you again for taking part in this experimental session today.</p>", "in", self.html)
+        assert "tokens" not in str(self.html), "Oops - tokens not points"
         yield Payments

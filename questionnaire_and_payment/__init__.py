@@ -39,12 +39,12 @@ class Payments(Page):
         lottery_msg = (
             f"In the lottery game, the computer picked lottery {lottery_selected}. "
             f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
-            f"meaning that you could earn {100 if lottery_choice else 190} tokens "
+            f"meaning that you could earn {100 if lottery_choice else 190} points "
             f"with {10 * lottery_selected}% probability, "
-            f"and {80 if lottery_choice else 5} tokens "
+            f"and {80 if lottery_choice else 5} points "
             f"with {100 - 10 * lottery_selected}% probability. "
             f"The computer extracted a {lottery_color} ball, "
-            f"meaning that you earned {lottery_payoff} tokens"
+            f"meaning that you earned {lottery_payoff}."
         )
         
         # The volunteer_community_centre app recorded a list of payoffs for use here:
@@ -52,17 +52,17 @@ class Payments(Page):
         assert len(interactive_payoffs) == 5
         interactive_msg = (
             f"In the interactive game, you played {len(interactive_payoffs)} rounds. "
-            f"You earned {interactive_payoffs[0]} tokens in the first round, "
-            f"{interactive_payoffs[1]} tokens in the second round, "
-            f"{interactive_payoffs[2]} tokens in the third round, "
-            f"{interactive_payoffs[3]} tokens in the fourth round, "
-            f"and {interactive_payoffs[4]} tokens in the fifth round, "
-            f"for a total of {sum(interactive_payoffs)} tokens."
+            f"You earned {interactive_payoffs[0]} in the first round, "
+            f"{interactive_payoffs[1]} in the second round, "
+            f"{interactive_payoffs[2]} in the third round, "
+            f"{interactive_payoffs[3]} in the fourth round, "
+            f"and {interactive_payoffs[4]} in the fifth round, "
+            f"for a total of {sum(interactive_payoffs)}."
         )
         
         return {
             "lottery_msg": lottery_msg,
             "interactive_msg": interactive_msg,
-            "payoff_int": int(participant.payoff),  # avoid adding word "points"
+            "payoff_int": participant.payoff,
         }
 page_sequence = [Questionnaire, Payments]

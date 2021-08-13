@@ -18,7 +18,7 @@ class PlayerBot(Bot):
             yield Volunteering, {"volunteer": False}
             expect("<p>Thanks for making your choice.</p>", "in", self.html)
             expect(
-                "No one in your group volunteered. You earned 0 tokens.",
+                "No one in your group volunteered. You earned 0 points.",
                 "in",
                 self.html,
             )

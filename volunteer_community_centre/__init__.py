@@ -33,10 +33,10 @@ class Instructions(Page):
         This game consists of {Constants.num_rounds} rounds. In each round, you will receive instructions and will be asked to make a decision. The decisions in each round are completely independent from each other. Your earnings from each round will depend on your decision, as well as the decisions that other participants in that round.
         </p>
         <p>
-        The computer will pair you with other {Constants.players_per_group - 1} participants, making a group of {Constants.players_per_group}. The group will remain the same during the {Constants.num_rounds} rounds. In each round, each of the members of your group has the opportunity to earn 50 tokens. In order for the members of your group to earn the 50 tokens, at least one of you needs to "volunteer". The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens in that round. You will have {Constants.volunteer_timeout} seconds to decide whether to volunteer. If at least one participant in your group volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus will not earn any token. Those who will possibly volunteer after them will receive 50 tokens. If no one volunteers, no one will earn any token. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of that round. You will be communicated whether anyone has volunteered, and your total earnings in that round. You will not know the identity of the person who has volunteered.
+        The computer will pair you with other {Constants.players_per_group - 1} participants, making a group of {Constants.players_per_group}. The group will remain the same during the {Constants.num_rounds} rounds. In each round, each of the members of your group has the opportunity to earn 50 points. In order for the members of your group to earn the 50 points, at least one of you needs to "volunteer". The volunteer will have to pay a cost of 50 points, meaning that they will not earn any points in that round. You will have {Constants.volunteer_timeout} seconds to decide whether to volunteer. If at least one participant in your group volunteers, everyone apart from them will earn 50 points. Only the participant who volunteers first will have to pay the 50 points, and thus will not earn any points. Those who will possibly volunteer after them will receive 50 points. If no one volunteers, no one will earn any points. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of that round. You will be communicated whether anyone has volunteered, and your total earnings in that round. You will not know the identity of the person who has volunteered.
         </p>
         <p>
-        Imagine that the {Constants.num_rounds} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre generate a benefit to the residents attending, which we quantify in 50 tokens, while the volunteers incur in personal costs in terms of time and energy.
+        Imagine that the {Constants.num_rounds} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre generate a benefit to the residents attending, which we quantify in 50 points, while the volunteers incur in personal costs in terms of time and energy.
         </p>
         <p>
         Do you have any questions? If so, please raise your hand virtually.
@@ -76,39 +76,39 @@ class Results(Page):
         players = subsession.get_players()
         if player.round_number in [1, 2, 5]:
             # Initial rules - self-less volunteer
-            no_volunteers_payoff = 0
-            volunteer_payoff = 0
-            group_payoff = 50
+            no_volunteers_payoff = cu(0)
+            volunteer_payoff = cu(0)
+            group_payoff = cu(50)
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff} tokens.</p>"
+                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff}.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
-                msg += f"<p>You volunteered first. You earn {volunteer_payoff} tokens and the other members of your group earn {group_payoff}.</p>"
+                msg += f"<p>You volunteered first. You earn {volunteer_payoff} and the other members of your group earn {group_payoff}.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff} tokens.</p>"
+                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff}.</p>"
         elif player.round_number in [3, 4]:
             # Alternative rules - compensated volunteer
-            no_volunteers_payoff = 0
-            volunteer_payoff = 50
-            group_payoff = 40
+            no_volunteers_payoff = cu(0)
+            volunteer_payoff = cu(50)
+            group_payoff = cu(40)
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff} tokens.</p>"
+                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff}.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
-                msg += f"<p>You volunteered first. You earn {volunteer_payoff} tokens and the other members of your group earn {group_payoff} tokens.</p>"
+                msg += f"<p>You volunteered first. You earn {volunteer_payoff} and the other members of your group earn {group_payoff}.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff} tokens, and the person who volunteered first earns {volunteer_payoff} tokens.</p>"
+                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff}, and the person who volunteered first earns {volunteer_payoff}.</p>"
         else:
             raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
         
         # Now record the payoff for use in later app to report the payoff breakdown:
         if player.round_number == 1:
             participant.volunteer_community_centre = [None] * Constants.num_rounds
-        participant.volunteer_community_centre[player.round_number - 1] = int(player.payoff)
+        participant.volunteer_community_centre[player.round_number - 1] = player.payoff
         
         if player.round_number == 1:
             msg += """
@@ -117,7 +117,7 @@ class Results(Page):
         elif player.round_number == 2:
             # TODO - pull scores from code?
             msg += """
-        <p>Now we will play a third round of the game, which will follow slightly different rules. Again, at least one person in your group needs to volunteer in order for you to earn some tokens, meaning that if no one volunteers, no one will earn any tokens. However, in this third round the volunteer will earn 50 tokens, while the other participants will earn 40 tokens. Only the participant who will volunteer first will earn the 50 tokens; if you decide to volunteer but someone else has volunteered before you, you will earn 40 tokens. This is because the volunteer will have to pay 50 tokens, but all of the other participants will transfer 10 of their 50 tokens to the volunteer. Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tides up afterwards.</p>
+        <p>Now we will play a third round of the game, which will follow slightly different rules. Again, at least one person in your group needs to volunteer in order for you to earn some points, meaning that if no one volunteers, no one will earn any points. However, in this third round the volunteer will earn 50 points, while the other participants will earn 40 points. Only the participant who will volunteer first will earn the 50 points; if you decide to volunteer but someone else has volunteered before you, you will earn 40 points. This is because the volunteer will have to pay 50 points, but all of the other participants will transfer 10 of their 50 points to the volunteer. Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tides up afterwards.</p>
         <p>Do you have any questions? If so, please raise your hand virtually. A member of the experimental team will answer your question for everyone.</p>
         <p>The third round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page</p>
         """
@@ -128,7 +128,7 @@ class Results(Page):
         elif player.round_number == 4:
             # TODO - pull scores from code?
             msg += """
-        <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of 50 tokens, meaning that they will not earn any tokens. If at least one participant volunteers, everyone apart from them will earn 50 tokens. Only the participant who volunteers first will have to pay the 50 tokens, and thus overall will not earn any tokens. Anyone who volunteers after them will earn 50 tokens. If no one volunteers, no one will earn any tokens. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
+        <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of 50 points, meaning that they will not earn any points. If at least one participant volunteers, everyone apart from them will earn 50 points. Only the participant who volunteers first will have to pay the 50 points, and thus overall will not earn any points. Anyone who volunteers after them will earn 50 points. If no one volunteers, no one will earn any points. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
         <p>The final round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.</p>
         """
         elif player.round_number == 5:
