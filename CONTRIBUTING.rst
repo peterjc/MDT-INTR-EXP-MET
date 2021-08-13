@@ -36,7 +36,7 @@ Files outside of oTree Studio include the text documentation, and test bots
 Python style conventions
 ------------------------
 
-Under the constrains of working within oTree Studio, the Python code tries to
+Under the constraints of working within oTree Studio, the Python code tries to
 follow the `PEP8 <https://www.python.org/dev/peps/pep-0008/>`__ style.
 
 Practically, coding style is enforced with the command line tool `flake8
