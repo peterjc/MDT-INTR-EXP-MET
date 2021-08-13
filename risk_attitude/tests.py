@@ -36,7 +36,7 @@ class PlayerBot(Bot):
 
         if threshold < lottery_selected:
             # B was picked
-            expect(self.player.payoff, 190 if lottery_red else 5)
+            expect(self.player.payoff, 77 if lottery_red else 2)
         else:
             # A was picked
-            expect(self.player.payoff, 100 if lottery_red else 80)
+            expect(self.player.payoff, 40 if lottery_red else 32)

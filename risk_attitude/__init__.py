@@ -7,10 +7,10 @@ class Constants(BaseConstants):
     name_in_url = 'risk_attitude'
     players_per_group = None
     num_rounds = 1
-    payoff_red_A = 100
-    payoff_white_A = 80
-    payoff_red_B = 190
-    payoff_white_B = 5
+    payoff_red_A = 40
+    payoff_white_A = 32
+    payoff_red_B = 77
+    payoff_white_B = 2
 class Subsession(BaseSubsession):
     pass
 class Group(BaseGroup):
