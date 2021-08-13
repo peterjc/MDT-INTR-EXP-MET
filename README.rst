@@ -5,8 +5,8 @@ About
 -----
 
 The repository https://github.com/peterjc/MDT-INTR-EXP-MET contains an
-"Economics Experiment" including a single-player risk assessment lottery game,
-and a multi-player cooperative game.
+"Economics Experiment" including a single-player risk assessment lottery game
+based on Holt and Laury (2002), and a multi-player cooperative game.
 
 It was created at the `James Hutton Institute <https://hutton.ac.uk>`__, and
 runs within `oTree <https://www.otree.org/>`__, an open-source platform for
