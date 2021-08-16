@@ -10,7 +10,8 @@ based on Holt and Laury (2002), and a multi-player cooperative game.
 
 It was created at the `James Hutton Institute <https://hutton.ac.uk>`__, and
 runs within `oTree <https://www.otree.org/>`__, an open-source platform for
-web-based interactive tasks.
+web-based interactive tasks. There is a live `demo version on oTree Hub
+<https://www.otreehub.com/projects/mdt-intr-exp-met/>`__.
 
 Our initial work was funded by the `Macaulay Development Trust
 <https://www.macaulaydevelopmenttrust.org/>`__ under project
