@@ -27,11 +27,12 @@ Installation
 
 You can install run an oTree server locally, or hosted in the cloud. It is
 written in Python, and so `oTree is distributed on PyPI
-<https://pypi.org/project/otree/>`__, from where it can be installed with:
+<https://pypi.org/project/otree/>`__. It can be installed along with the
+other dependencies using:
 
 .. code:: console
 
-   $ pip install otree
+   $ pip install -r requirements.txt
 
 Then change directory to a copy of this repository, and run a development
 server (with additional debugging information via ``otree devserver``), or a
