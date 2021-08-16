@@ -11,17 +11,15 @@ control:
 
 .. code:: console
 
-    $ tar -zxvf ~/Downloads/*-MDT-INTR-EXP-MET.otreezip && \
-      rm ~/Downloads/*-MDT-INTR-EXP-MET.otreezip
+    $ ./unpack_otreezip
     $ otree test
     $ git commit . -m "Changes from oTree Studio"
 
-Beware that additional care is needed if any of the folder names have changed
-(by creating or renaming an "App" within oTree Studio).
+Here ``unpack_otreezip`` is a script which streamlines finding the latest
+``~/Downloads/*-MDT-INTR-EXP-MET.otreezip`` and calling ``otree unzip``.
 
-As an alternative to using ``tar``, the ``otree unzip`` command can be used.
-There is also an ``otree zip`` command to turn a folder into a ``.otreezip``
-file.
+For the git commit, beware that additional care is needed if any of the folder
+names have changed (by creating or renaming an "App" within oTree Studio).
 
 If the changes fail our pre-commit hook objects, fixes need to be made within
 oTree (e.g. remove trailing whitespace), and a fresh tar-ball downloaded,
@@ -32,6 +30,17 @@ Studio!
 
 Files outside of oTree Studio include the text documentation, and test bots
 ``*/tests.py`` (functionality not available in the basic oTree Studio tier).
+
+For deployment to oTree Hub and Heroku, we need to zip the files up again.
+We could use ``otree zip`` but that will include any incidental files not
+under git version control. Instead:
+
+.. code:: console
+
+    $ ./repack_otreezip
+
+This will create (or replace) file ``MDT-INTR-EXP-MET.otreezip`` for upload.
+
 
 Python style conventions
 ------------------------

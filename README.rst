@@ -38,7 +38,6 @@ Then change directory to a copy of this repository, and run a development
 server (with additional debugging information via ``otree devserver``), or a
 production server (with ``otree prodserver``).
 
-Or, to run on the cloud, the example directory must be re-compressed (via
-the ``otree zip`` command) and then uploaded to `oTree Hub
-<https://www.otreehub.com/my_projects/>`__ for deployment on Heroku (a paid
-service).
+Or, to run on the cloud, the example directory must be re-compressed (which
+can be done with the ``otree zip`` command), and then uploaded to `oTree Hub
+<https://www.otreehub.com/my_projects/>`__ for deployment on Heroku.
