@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+"""Script to unzip a .otreezip file from oTree Studio and apply our changes.
+
+This is essentially a customised version of the ``otree unzip`` command to
+streamline local development under git version control.
+
+The ``.otreezip`` files downloaded from oTree Studio are actually tar-balls,
+so we can use ``tar -zxvf name.otreezip`` or ``otree unzip name.otreezip`` for
+this.
+
+The script looks for the most recent file in ``~/Downloads/*-name.otreezip``
+where ``name`` is taken from the current folder name and ``*`` is the random
+three letter prefix from oTree Studio's download function.
+
+After unzipping, could potentially apply a number of post-processing changes
+to use functionality not available in oTree Studio, including:
+
+* Adding ``POINTS_CUSTOM_NAME = 'tokens'`` to ``settings.py``
+* Setting ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
+* Running black
+* Replacing "from otree.api import *"
+* Adding things to .gitignore (or reverting the oTree Studio changes)
+"""
+
+import os
+import subprocess
+import sys
+
+
+def run(cmd_string):
+    print(cmd_string)
+    subprocess.check_call(cmd_string, shell=True)
+
+
+def main():
+    project = os.path.split(os.path.abspath(os.path.curdir))[1]
+    downloads = os.path.join(os.environ["HOME"], "Downloads")
+    if not os.path.isdir(downloads):
+        sys.exit(f"ERROR: Did not find directory {downloads}")
+    inputs = [_ for _ in os.listdir(downloads) if _.endswith(f"-{project}.otreezip")]
+    if not inputs:
+        sys.exit(f"ERROR: No *-{project}.otreezip in downloads")
+    if len(inputs) > 1:
+        sys.stderr.write(
+            f"More than one *-{project}.otreezip in downloads, taking latest\n"
+        )
+        inputs = sorted(
+            inputs, key=lambda tar_ball: os.stat(f"{downloads}/{tar_ball}").st_ctime
+        )
+    tar_ball = inputs[-1]
+
+    run(f"tar -zxvf {downloads}/{tar_ball}")
+    # run("""echo "POINTS_CUSTOM_NAME = 'tokens'" >> settings.py""")
+    # run("black")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+"""Build a .otreezip file from an oTree project under git version control.
+
+This is essentially a customised version of the ``otree zip`` command to
+streamline local development under git version control.
+
+The key difference is this script will only package files under git version
+control, and will ignore any incidental untracked files present (e.g.
+``manuscript.pdf``) or excluded via ``.gitignore`` (e.g. ``db.sqlite3``).
+
+Like the ``otree zip`` command, it will generate a file ``project.otreezip``
+named for the containing ``project/`` folder which should be at the top level
+of a git repository.
+"""
+
+import os
+import subprocess
+import sys
+
+import git  # gitpython
+
+
+def run(cmd):
+    if isinstance(cmd, str):
+        print(cmd)
+        subprocess.check_call(cmd, shell=True)
+    else:
+        # Not doing doing space escaping with quotes etc...
+        print(" ".join(cmd))
+        subprocess.check_call(cmd)
+
+
+def main():
+    project = os.path.split(os.path.abspath(os.path.curdir))[1]
+
+    if not os.path.isdir(".git"):
+        sys.exit("ERROR: There is not .git folder for a git repository")
+    repo = git.Repo(".")
+
+    if repo.is_dirty():
+        sys.exit("ERROR: Git repository is not clean")
+
+    untracked_files = repo.untracked_files  # expensive call, cache this!
+    if untracked_files:
+        sys.stderr.write(f"Will ignore {len(untracked_files)} untracked files\n")
+
+    files = [_.path for _ in repo.tree().traverse()]
+    print(f"Will zip {len(files)} files tracked by git")
+
+    cmd = ["tar", "-cvzf", f"{project}.otreezip"] + files
+    run(cmd)
+
+
+if __name__ == "__main__":
+    main()
