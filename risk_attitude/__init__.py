@@ -2,7 +2,7 @@
 from otree.api import *
 c = cu
 
-doc = 'Introduction & risk attitude lottery game based on Holt and Laury (2002).'
+doc = 'Introduction and risk attitude lottery game based on Holt and Laury (2002).'
 class Constants(BaseConstants):
     name_in_url = 'risk_attitude'
     players_per_group = None

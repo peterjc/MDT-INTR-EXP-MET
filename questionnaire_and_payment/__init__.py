@@ -2,7 +2,7 @@
 from otree.api import *
 c = cu
 
-doc = 'Show questionnaire (including payment details) and report payoffs. Needs to get payoff information from previous apps.'
+doc = 'Show questionnaire (and collect payment details), report payoffs from previous apps.'
 class Constants(BaseConstants):
     name_in_url = 'questionnaire_and_payment'
     players_per_group = None
