@@ -19,3 +19,4 @@ SECRET_KEY = 'blahblah'
 INSTALLED_APPS = ['otree']
 
 
+DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about voluneering.'

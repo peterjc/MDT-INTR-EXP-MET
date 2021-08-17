@@ -12,8 +12,12 @@ The script looks for the most recent file in ``~/Downloads/*-name.otreezip``
 where ``name`` is taken from the current folder name and ``*`` is the random
 three letter prefix from oTree Studio's download function.
 
-After unzipping, could potentially apply a number of post-processing changes
-to use functionality not available in oTree Studio, including:
+After unzipping, applies some post-processing changes to use functionality not
+available in oTree Studio:
+
+* Setting ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
+
+Could go further:
 
 * Adding ``POINTS_CUSTOM_NAME = 'tokens'`` to ``settings.py``
 * Setting ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
@@ -50,6 +54,7 @@ def main():
     tar_ball = inputs[-1]
 
     run(f"tar -zxvf {downloads}/{tar_ball}")
+    run("""echo "DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about voluneering.'" >> settings.py""")
     # run("""echo "POINTS_CUSTOM_NAME = 'tokens'" >> settings.py""")
     # run("black")
 
