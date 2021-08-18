@@ -1,0 +1,27 @@
+{{ block title }}Lottery recap{{ endblock }}
+{{ block content }}
+
+<p>Correct:</p>
+<table class="table">
+    <thead>
+        <th>#</th><th>Red/white ratio</th><th>Lottery A or B?</th>
+    </thead>
+    <tr>
+        <th>3</th>
+        <td><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td>{{ lottery_payoffs }}
+        </td>
+    </tr>
+</table>
+<p>
+If the above lottery decision was selected by the computer, you had chosen Lottery A, and the computer extracted a white ball, then yes: Your payoff would be {{ Constants.payoff_white_A|cu }}.
+</p>
+<p>
+We will now proceed to the actual lottery game, where you must make ten decisions.
+</p>
+    
+{{ formfields }}
+
+{{ next_button }}
+
+{{ endblock }}

@@ -83,6 +83,14 @@ class LotteryUnderstanding(Page):
             "lottery_payoffs": f'{choices[True]}<br />{choices[False]}',
             "lottery_understanding_label": f'How many {units} would you earn?',
         }
+class LotteryUnderstood(Page):
+    form_model = 'player'
+    @staticmethod
+    def vars_for_template(player):
+        choices = dict(lottery_choices(player))
+        return {
+            "lottery_payoffs": f'{choices[True]}<br />{choices[False]}',
+        }
 class LotteryDecision(Page):
     form_model = 'player'
     form_fields = ['lottery1', 'lottery2', 'lottery3', 'lottery4', 'lottery5', 'lottery6', 'lottery7', 'lottery8', 'lottery9', 'lottery10']
@@ -130,4 +138,4 @@ class LotteryDecision(Page):
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
-page_sequence = [Introduction, LotteryInstructions, LotteryUnderstanding, LotteryDecision]
+page_sequence = [Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
