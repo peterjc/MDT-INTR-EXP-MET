@@ -44,7 +44,7 @@ class Payments(Page):
             f"and {cu(80 if lottery_choice else 5)} "
             f"with {100 - 10 * lottery_selected}% probability. "
             f"The computer extracted a {lottery_color} ball, "
-            f"meaning that you earned {lottery_payoff}."
+            f"meaning that you earned <b>{lottery_payoff}</b>."
         )
         
         # The volunteer_community_centre app recorded a list of payoffs for use here:
@@ -57,7 +57,7 @@ class Payments(Page):
             f"{interactive_payoffs[2]} in the third round, "
             f"{interactive_payoffs[3]} in the fourth round, "
             f"and {interactive_payoffs[4]} in the fifth round, "
-            f"for a total of {sum(interactive_payoffs)}."
+            f"for a total of <b>{sum(interactive_payoffs)}</b>."
         )
         
         return {"lottery_msg": lottery_msg, "interactive_msg": interactive_msg}
