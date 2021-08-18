@@ -56,7 +56,7 @@ class Player(BasePlayer):
     lottery10 = models.BooleanField()
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
-    lottery_understanding = models.IntegerField(label='How many points would you earn?', min=0)
+    lottery_understanding = models.IntegerField(min=0)
 class Introduction(Page):
     form_model = 'player'
     @staticmethod
@@ -76,8 +76,13 @@ class LotteryUnderstanding(Page):
     form_fields = ['lottery_understanding']
     @staticmethod
     def vars_for_template(player):
+        from otree.settings import POINTS_CUSTOM_NAME
+        units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
         choices = dict(lottery_choices(player))
-        return {"lottery_payoffs": f'{choices[True]}<br />{choices[False]}'}
+        return {
+            "lottery_payoffs": f'{choices[True]}<br />{choices[False]}',
+            "lottery_understanding_label": f'How many {units} would you earn?',
+        }
 class LotteryDecision(Page):
     form_model = 'player'
     form_fields = ['lottery1', 'lottery2', 'lottery3', 'lottery4', 'lottery5', 'lottery6', 'lottery7', 'lottery8', 'lottery9', 'lottery10']
