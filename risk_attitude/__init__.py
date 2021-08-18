@@ -119,11 +119,15 @@ class LotteryDecision(Page):
         player.lottery_selected = lottery_selected
         player.lottery_red = lottery_red
         
-        # Finally, record this in participant.risk_attitude for the final app report
-        participant.risk_attitude = {
-            "lottery_red": lottery_red,
-            "lottery_selected": lottery_selected,
-            "lottery_choice": lottery_choice,
-            "lottery_payoff": int(player.payoff)
-        }
+        # Finally, record message for the final app report
+        participant.risk_attitude_msg = (
+            f"In the lottery game, the computer picked lottery {lottery_selected}. "
+            f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
+            f"meaning that you could earn {cu(Constants.payoff_red_A  if lottery_choice else Constants.payoff_white_A)} "
+            f"with {10 * lottery_selected}% probability (red), "
+            f"and {cu(Constants.payoff_red_B if lottery_choice else Constants.payoff_white_B)} "
+            f"with {100 - 10 * lottery_selected}% probability (white). "
+            f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
+            f"meaning that you earned <b>{player.payoff}</b>."
+        )
 page_sequence = [Introduction, LotteryInstructions, LotteryUnderstanding, LotteryDecision]

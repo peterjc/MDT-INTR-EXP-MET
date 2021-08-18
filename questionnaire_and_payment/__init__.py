@@ -30,24 +30,7 @@ class Payments(Page):
     @staticmethod
     def vars_for_template(player):
         participant = player.participant
-        # The risk_attitude app recorded a dict for values for use here:
-        lottery_selected = participant.risk_attitude["lottery_selected"]
-        lottery_color = "red" if participant.risk_attitude["lottery_red"] else "white"
-        lottery_choice = "A" if participant.risk_attitude["lottery_choice"] else "B"
-        lottery_payoff = participant.risk_attitude["lottery_payoff"]
-        
-        lottery_msg = (
-            f"In the lottery game, the computer picked lottery {lottery_selected}. "
-            f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
-            f"meaning that you could earn {cu(100 if lottery_choice else 190)} "
-            f"with {10 * lottery_selected}% probability, "
-            f"and {cu(80 if lottery_choice else 5)} "
-            f"with {100 - 10 * lottery_selected}% probability. "
-            f"The computer extracted a {lottery_color} ball, "
-            f"meaning that you earned <b>{lottery_payoff}</b>."
-        )
-        
-        # The volunteer_community_centre app recorded a list of payoffs for use here:
+        # The risk_attitude & volunteer_community_centre app recorded values:
         interactive_payoffs = participant.volunteer_community_centre
         assert len(interactive_payoffs) == 5
         interactive_msg = (
@@ -60,5 +43,5 @@ class Payments(Page):
             f"for a total of <b>{sum(interactive_payoffs)}</b>."
         )
         
-        return {"lottery_msg": lottery_msg, "interactive_msg": interactive_msg}
+        return {"lottery_msg": participant.risk_attitude_msg, "interactive_msg": interactive_msg}
 page_sequence = [Questionnaire, Payments]
