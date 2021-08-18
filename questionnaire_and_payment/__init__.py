@@ -39,9 +39,9 @@ class Payments(Page):
         lottery_msg = (
             f"In the lottery game, the computer picked lottery {lottery_selected}. "
             f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
-            f"meaning that you could earn {100 if lottery_choice else 190} points "
+            f"meaning that you could earn {cu(100 if lottery_choice else 190)} "
             f"with {10 * lottery_selected}% probability, "
-            f"and {80 if lottery_choice else 5} points "
+            f"and {cu(80 if lottery_choice else 5)} "
             f"with {100 - 10 * lottery_selected}% probability. "
             f"The computer extracted a {lottery_color} ball, "
             f"meaning that you earned {lottery_payoff}."
@@ -60,9 +60,5 @@ class Payments(Page):
             f"for a total of {sum(interactive_payoffs)}."
         )
         
-        return {
-            "lottery_msg": lottery_msg,
-            "interactive_msg": interactive_msg,
-            "payoff_int": participant.payoff,
-        }
+        return {"lottery_msg": lottery_msg, "interactive_msg": interactive_msg}
 page_sequence = [Questionnaire, Payments]

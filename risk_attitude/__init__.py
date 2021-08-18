@@ -58,11 +58,13 @@ class Introduction(Page):
     @staticmethod
     def vars_for_template(player):
         session = player.session
+        from otree.settings import POINTS_CUSTOM_NAME
         from otree.settings import REAL_WORLD_CURRENCY_CODE
         from otree.currency import RealWorldCurrency
+        units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
         factor = cu(1 / player.session.config['real_world_currency_per_point'])
         rate = f"{REAL_WORLD_CURRENCY_CODE} at a rate of {RealWorldCurrency(1)} per every {factor}"
-        return {"rate": rate}
+        return {"units": units, "rate": rate}
 class LotteryInstructions(Page):
     form_model = 'player'
 class LotteryDecision(Page):
