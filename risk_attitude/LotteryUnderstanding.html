@@ -1,0 +1,23 @@
+{{ block title }}Lottery rules check{{ endblock }}
+{{ block content }}
+
+<p>We will now ask you a question to check that you have understood the instructions of this first game. Please answer it and then click on ‘Next’ below. You need to provide the right answer to be able to proceed. Your answer to this question will not affect your final earnings.</p>
+<table class="table">
+    <thead>
+        <th>#</th><th>Red/white ratio</th><th>Lottery A or B?</th>
+    </thead>
+    <tr>
+        <th>3</th>
+        <td><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td>{{ lottery_payoffs }}
+        </td>
+    </tr>
+</table>
+<p>
+The above decision has been extracted for execution by the computer. In this decision you had chosen Lottery A. The computer extracts a white ball.
+</p>
+{{ formfields }}
+
+{{ next_button }}
+
+{{ endblock }}

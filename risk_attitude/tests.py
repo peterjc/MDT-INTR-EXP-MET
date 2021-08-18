@@ -1,6 +1,6 @@
 from otree.api import Bot, expect
 
-from . import Introduction, LotteryInstructions, LotteryDecision
+from . import Introduction, LotteryInstructions, LotteryUnderstanding, LotteryDecision
 
 
 class PlayerBot(Bot):
@@ -17,6 +17,7 @@ class PlayerBot(Bot):
         )
         yield Introduction
         yield LotteryInstructions
+        yield LotteryUnderstanding, {"lottery_understanding": 32}
         # Risk averse people should always pick A, risk taking ones B,
         # and there should be a switching point to B for everyone.
         #

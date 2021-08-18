@@ -40,6 +40,9 @@ def lottery9_choices(player):
     return lottery_choices(player)
 def lottery10_choices(player):
     return lottery_choices(player)
+def lottery_understanding_error_message(player, value):
+    if value != Constants.payoff_white_A:
+        return f"Your answer is wrong. For lottery A you have a 30% probability of earning {cu(Constants.payoff_red_A)} (if a red ball is extracted) and a 70% probability of earning {cu(Constants.payoff_white_A)} (if a white ball is extracted). Since a white ball was extracted, you earn {cu(Constants.payoff_white_A)}"
 class Player(BasePlayer):
     lottery1 = models.BooleanField()
     lottery2 = models.BooleanField()
@@ -53,6 +56,7 @@ class Player(BasePlayer):
     lottery10 = models.BooleanField()
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
+    lottery_understanding = models.IntegerField(label='How many points would you earn?', min=0)
 class Introduction(Page):
     form_model = 'player'
     @staticmethod
@@ -67,6 +71,13 @@ class Introduction(Page):
         return {"units": units, "rate": rate}
 class LotteryInstructions(Page):
     form_model = 'player'
+class LotteryUnderstanding(Page):
+    form_model = 'player'
+    form_fields = ['lottery_understanding']
+    @staticmethod
+    def vars_for_template(player):
+        choices = dict(lottery_choices(player))
+        return {"lottery_payoffs": f'{choices[True]}<br />{choices[False]}'}
 class LotteryDecision(Page):
     form_model = 'player'
     form_fields = ['lottery1', 'lottery2', 'lottery3', 'lottery4', 'lottery5', 'lottery6', 'lottery7', 'lottery8', 'lottery9', 'lottery10']
@@ -110,4 +121,4 @@ class LotteryDecision(Page):
             "lottery_choice": lottery_choice,
             "lottery_payoff": int(player.payoff)
         }
-page_sequence = [Introduction, LotteryInstructions, LotteryDecision]
+page_sequence = [Introduction, LotteryInstructions, LotteryUnderstanding, LotteryDecision]
