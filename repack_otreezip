@@ -44,8 +44,11 @@ def main():
     if untracked_files:
         sys.stderr.write(f"Will ignore {len(untracked_files)} untracked files\n")
 
-    files = [_.path for _ in repo.tree().traverse()]
+    files = [_.path for _ in repo.tree().traverse() if os.path.isfile(_.path)]
     print(f"Will zip {len(files)} files tracked by git")
+
+    # Make sure tar on macOS does not bundle ._* file system metadata files.
+    os.environ["COPYFILE_DISABLE"] = "1"
 
     cmd = ["tar", "-cvzf", f"{project}.otreezip"] + files
     run(cmd)
