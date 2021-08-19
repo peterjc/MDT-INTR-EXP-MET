@@ -1,6 +1,6 @@
 from otree.api import Bot, expect
 
-from . import Instructions, Understanding, Volunteering, Results
+from . import Instructions, Understanding, Understood, Volunteering, Results
 
 
 class PlayerBot(Bot):
@@ -17,6 +17,7 @@ class PlayerBot(Bot):
                 "understanding2": 50,
                 "understanding3": 0,
             }
+            yield Understood
         # yield WaitToStart <-- automatic
         if self.case == "never":
             # Do with timeout?

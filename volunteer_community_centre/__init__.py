@@ -60,7 +60,7 @@ class Instructions(Page):
         Do you have any questions? If so, please raise your hand virtually.
         </p>
         <p>
-        Now we will play round {player.round_number} of the game. The countdown will start once all {Constants.num_rounds} members of your group have clicked the "Next" button below. To volunteer, you need to click on the "Volunteer" button at the centre of the page. Regardless of your choice, you will have to wait until the end of the {Constants.volunteer_timeout} seconds. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.
+        Now please click ‘Next’, and you will be redirected to a page with questions to check your understanding of the instructions.
         </p>
         """
             participant.volunteer_community_centre_msg = msg  # cache for reminder when Volunteering
@@ -70,6 +70,11 @@ class Instructions(Page):
 class Understanding(Page):
     form_model = 'player'
     form_fields = ['understanding1', 'understanding2', 'understanding3']
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+class Understood(Page):
+    form_model = 'player'
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
@@ -198,4 +203,4 @@ class Results(Page):
             participant.volunteer_community_centre_msg = instructions
             msg += instructions
         return {"message": msg}
-page_sequence = [Instructions, Understanding, WaitToStart, Volunteering, Results]
+page_sequence = [Instructions, Understanding, Understood, WaitToStart, Volunteering, Results]
