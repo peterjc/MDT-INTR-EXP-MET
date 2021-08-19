@@ -10,8 +10,11 @@ class Constants(BaseConstants):
     volunteer_timeout = 15
 class Subsession(BaseSubsession):
     pass
+def record_round_start(group):
+    import time
+    group.start_timestamp = time.time()
 class Group(BaseGroup):
-    pass
+    start_timestamp = models.FloatField()
 class Player(BasePlayer):
     volunteer = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], initial=False, label='Do you volunteer?')
     submission_timestamp = models.FloatField()
@@ -52,12 +55,18 @@ class Instructions(Page):
             msg = f"ERROR - Invalid round number {player.round_number}"
         return {"instructions": msg}
 class WaitToStart(WaitPage):
+    after_all_players_arrive = 'record_round_start'
     title_text = 'Waiting for other players to begin'
 class Volunteering(Page):
     form_model = 'player'
     form_fields = ['volunteer']
-    timeout_seconds = 15
     timer_text = 'You have 15 seconds to decide.'
+    @staticmethod
+    def is_displayed(player):
+        group = player.group
+        # Expecting will always be (just under) 15s left,
+        import time
+        return Constants.volunteer_timeout - time.time() + group.start_timestamp > 1
     @staticmethod
     def vars_for_template(player):
         participant = player.participant
@@ -66,11 +75,15 @@ class Volunteering(Page):
         return {"instructions": participant.volunteer_community_centre_msg}
     @staticmethod
     def before_next_page(player, timeout_happened):
+        group = player.group
         import time  # hack, want this at top level really
-        player.submission_timestamp = time.time()
+        # Convert to a relative timestamp (in seconds):
+        player.submission_timestamp = time.time() - group.start_timestamp
     @staticmethod
     def get_timeout_seconds(player):
-        return Constants.volunteer_timeout
+        group = player.group
+        import time
+        return Constants.volunteer_timeout - time.time() + group.start_timestamp
 class Results(Page):
     form_model = 'player'
     @staticmethod
