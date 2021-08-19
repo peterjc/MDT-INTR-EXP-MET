@@ -15,9 +15,22 @@ def record_round_start(group):
     group.start_timestamp = time.time()
 class Group(BaseGroup):
     start_timestamp = models.FloatField()
+def understanding1_error_message(player, value):
+    group = player.group
+    if value != 0:
+        return f"Your answer is wrong, if no one in the group volunteers all of you earn {cu(0)}"
+def understanding2_error_message(player, value):
+    if value != 50:
+        return f"Your answer is wrong, if someone volunteers before you, they will earn {cu(0)} but you will still earn {cu(50)}"
+def understanding3_error_message(player, value):
+    if value != 0:
+        return f"Your answer is wrong, if you are the first person to volunteer, you earn {cu(0)}"
 class Player(BasePlayer):
     volunteer = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], initial=False, label='Do you volunteer?')
     submission_timestamp = models.FloatField()
+    understanding1 = models.IntegerField(label='No one in your group volunteers within the time available. How many points will you earn?', min=0)
+    understanding2 = models.IntegerField(label='You volunteer but someone else has volunteered before you. How many points will you earn? ', min=0)
+    understanding3 = models.IntegerField(label='How many points will you earn if you volunteer first?', min=0)
 class Instructions(Page):
     form_model = 'player'
     @staticmethod
@@ -54,6 +67,12 @@ class Instructions(Page):
         else:
             msg = f"ERROR - Invalid round number {player.round_number}"
         return {"instructions": msg}
+class Understanding(Page):
+    form_model = 'player'
+    form_fields = ['understanding1', 'understanding2', 'understanding3']
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 class WaitToStart(WaitPage):
     after_all_players_arrive = 'record_round_start'
     title_text = 'Waiting for other players to begin'
@@ -179,4 +198,4 @@ class Results(Page):
             participant.volunteer_community_centre_msg = instructions
             msg += instructions
         return {"message": msg}
-page_sequence = [Instructions, WaitToStart, Volunteering, Results]
+page_sequence = [Instructions, Understanding, WaitToStart, Volunteering, Results]
