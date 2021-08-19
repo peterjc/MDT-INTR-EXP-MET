@@ -32,13 +32,13 @@ class Instructions(Page):
         Thank you for playing the first game. Now we will play a second game.
         </p>
         <p>
-        This game consists of {Constants.num_rounds} rounds. In each round, you will receive instructions and will be asked to make a decision. The decisions in each round are completely independent from each other. Your earnings from each round will depend on your decision, as well as the decisions that other participants in that round.
+        This game consists of {Constants.num_rounds} rounds. In each round, you will receive instructions and will be asked to make a decision. The decisions in each round are completely independent from each other. Your earnings from each round will depend on your decision, as well as the decisions that other participants make in that round.
         </p>
         <p>
-        The computer will pair you with other {Constants.players_per_group - 1} participants, making a group of {Constants.players_per_group}. The group will remain the same during the {Constants.num_rounds} rounds. In each round, each of the members of your group has the opportunity to earn {cu(50)}. In order for the members of your group to earn the {cu(50)}, at least one of you needs to "volunteer". The volunteer will have to pay a cost of {cu(50)}, meaning that they will not earn any {units} in that round. You will have {Constants.volunteer_timeout} seconds to decide whether to volunteer. If at least one participant in your group volunteers, everyone apart from them will earn {cu(50)}. Only the participant who volunteers first will have to pay the {cu(50)}, and thus will not earn any {units}. Those who will possibly volunteer after them will receive {cu(50)}. If no one volunteers, no one will earn any {units}. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of that round. You will be communicated whether anyone has volunteered, and your total earnings in that round. You will not know the identity of the person who has volunteered.
+        The computer will pair you with other {Constants.players_per_group - 1} participants, making a group of {Constants.players_per_group}. The group will remain the same during the {Constants.num_rounds} rounds. In each round, each of the members of your group has the opportunity to earn {cu(50)}. In order for the members of your group to earn the {cu(50)}, at least one of you needs to "volunteer". The volunteer will have to pay a cost of {cu(50)}, meaning that they will not earn any {units} in that round. You will have {Constants.volunteer_timeout} seconds to decide whether to volunteer. If at least one participant in your group volunteers, everyone apart from them will earn {cu(50)}. Only the participant who volunteers first will have to pay the {cu(50)}, and thus will not earn any {units}. Those who will possibly volunteer after them will  not be considered as volunteers and will thus receive {cu(50)}. If no one volunteers, no one will earn any {units}. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of that round. You will be communicated whether anyone has volunteered, and your total earnings in that round. You will not know the identity of the person who has volunteered.
         </p>
         <p>
-        Imagine that the {Constants.num_rounds} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre generate a benefit to the residents attending, which we quantify in {cu(50)}, while the volunteers incur in personal costs in terms of time and energy.
+        Imagine that the {Constants.num_rounds} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre benefit the residents attending.  This benefit has a value of {cu(50)}, while the volunteers incur personal costs in terms of time and energy that cancel out the benefits from the activities implemented in the centre.
         </p>
         <p>
         Do you have any questions? If so, please raise your hand virtually.
@@ -85,13 +85,16 @@ class Results(Page):
             group_payoff = cu(50)
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff}.</p>"
+                msg += f"<p>No one in your group volunteered. You earn {no_volunteers_payoff}.</p>"
+            elif not player.volunteer:
+                player.payoff = group_payoff
+                msg += f"<p>You did not volunteer but at least one person in your group volunteered. You earn {group_payoff}.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
                 msg += f"<p>You volunteered first. You earn {volunteer_payoff} and the other members of your group earn {group_payoff}.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff}.</p>"
+                msg += f"<p>You volunteered but another person in your group volunteered before you. You earn {group_payoff}.</p>"
         elif player.round_number in [3, 4]:
             # Alternative rules - compensated volunteer
             no_volunteers_payoff = cu(0)
@@ -99,13 +102,16 @@ class Results(Page):
             group_payoff = cu(40)
             if not any(p.volunteer for p in players):
                 player.payoff = no_volunteers_payoff
-                msg += f"<p>No one in your group volunteered. You earned {no_volunteers_payoff}.</p>"
+                msg += f"<p>No one in your group volunteered. You earn {no_volunteers_payoff}.</p>"
+            elif not player.volunteer:
+                player.payoff = group_payoff
+                msg += f"<p>You did not volunteer but at least one person in your group volunteered. You earn {group_payoff}, and the person who volunteered first earns {volunteer_payoff}.</p>"
             elif player.submission_timestamp == min(p.submission_timestamp for p in players if p.volunteer):
                 player.payoff = volunteer_payoff
                 msg += f"<p>You volunteered first. You earn {volunteer_payoff} and the other members of your group earn {group_payoff}.</p>"
             else:
                 player.payoff = group_payoff
-                msg += f"<p>Another person in your group volunteered first. You earn {group_payoff}, and the person who volunteered first earns {volunteer_payoff}.</p>"
+                msg += f"<p>You volunteered but another person in your group volunteered before you. You earn {group_payoff}, and the person who volunteered first earns {volunteer_payoff}.</p>"
         else:
             raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
         

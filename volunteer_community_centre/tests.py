@@ -18,7 +18,7 @@ class PlayerBot(Bot):
             yield Volunteering, {"volunteer": False}
             expect("<p>Thanks for making your choice.</p>", "in", self.html)
             expect(
-                "No one in your group volunteered. You earned 0 points.",
+                "No one in your group volunteered. You earn 0 points.",
                 "in",
                 self.html,
             )
@@ -46,7 +46,7 @@ class PlayerBot(Bot):
                     )
             else:
                 expect(
-                    "Another person in your group volunteered first.", "in", self.html
+                    "You volunteered but another person in your group volunteered before you.", "in", self.html
                 )
                 if self.round_number in [1, 2, 5]:
                     expect(self.player.payoff, 50)  # free-loader
