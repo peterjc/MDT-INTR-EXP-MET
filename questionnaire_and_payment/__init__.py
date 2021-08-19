@@ -30,18 +30,9 @@ class Payments(Page):
     @staticmethod
     def vars_for_template(player):
         participant = player.participant
-        # The risk_attitude & volunteer_community_centre app recorded values:
-        interactive_payoffs = participant.volunteer_community_centre
-        assert len(interactive_payoffs) == 5
-        interactive_msg = (
-            f"In the interactive game, you played {len(interactive_payoffs)} rounds. "
-            f"You earned {interactive_payoffs[0]} in the first round, "
-            f"{interactive_payoffs[1]} in the second round, "
-            f"{interactive_payoffs[2]} in the third round, "
-            f"{interactive_payoffs[3]} in the fourth round, "
-            f"and {interactive_payoffs[4]} in the fifth round, "
-            f"for a total of <b>{sum(interactive_payoffs)}</b>."
-        )
-        
-        return {"lottery_msg": participant.risk_attitude_msg, "interactive_msg": interactive_msg}
+        # The risk_attitude & volunteer_community_centre app recorded these strings:
+        return {
+            "lottery_msg": participant.risk_attitude_msg,
+            "interactive_msg": participant.volunteer_community_centre_msg,
+        }
 page_sequence = [Questionnaire, Payments]

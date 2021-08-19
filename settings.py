@@ -5,7 +5,7 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'GBP'
 USE_POINTS = True
 DEMO_PAGE_INTRO_HTML = ''
-PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteer_community_centre']
+PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteer_community_centre_msg']
 SESSION_FIELDS = []
 ROOMS = []
 
@@ -19,4 +19,4 @@ SECRET_KEY = 'blahblah'
 INSTALLED_APPS = ['otree']
 
 
-DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about voluneering.'
+DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about volunteering.'
