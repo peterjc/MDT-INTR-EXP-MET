@@ -14,9 +14,10 @@ web-based interactive tasks. There is a `live demo on oTree Hub
 <https://www.otreehub.com/projects/mdt-intr-exp-met/>`__.
 
 Our initial work was funded by the `Macaulay Development Trust
-<https://www.macaulaydevelopmenttrust.org/>`__ under project
-MDT-INTR-EXP-MET. The experimental team consists of Simone Piras and Laure
-Kuhfuss (protocols), and Peter Cock (implementation).
+<https://www.macaulaydevelopmenttrust.org/>`__ under project "Introducing
+experimental methods for the study of resource and land-related decisions in
+rural Scotland" (MDT project INTR-EXP-MET). The experimental team consists of
+Simone Piras and Laure Kuhfuss (protocols), and Peter Cock (implementation).
 
 This example was created and revised within the `oTree Studio
 <https://www.otreehub.com/studio/>`__ interactive environment, and then
