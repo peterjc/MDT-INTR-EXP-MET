@@ -32,7 +32,7 @@ class Payments(Page):
         participant = player.participant
         # The risk_attitude & volunteer_community_centre app recorded these strings:
         return {
-            "lottery_msg": participant.risk_attitude_msg,
-            "interactive_msg": participant.volunteer_community_centre_msg,
+            "risk_attitude_msg": participant.risk_attitude_msg,
+            "volunteering_msg": participant.volunteering_msg,
         }
 page_sequence = [Questionnaire, Payments]

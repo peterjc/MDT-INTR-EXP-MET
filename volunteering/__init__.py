@@ -63,7 +63,6 @@ class Instructions(Page):
         Now please click ‘Next’, and you will be redirected to a page with questions to check your understanding of the instructions.
         </p>
         """
-            participant.volunteer_community_centre_msg = msg  # cache for reminder when Volunteering
         else:
             msg = f"ERROR - Invalid round number {player.round_number}"
         return {"instructions": msg}
@@ -193,7 +192,7 @@ class Results(Page):
         # Record final results text via participant field:
         if player.round_number == Constants.num_rounds:
             interactive_payoffs = [player.in_round(i+1).payoff for i in range(Constants.num_rounds)]
-            participant.volunteer_community_centre_msg = (
+            participant.volunteering_msg = (
                 f"In the interactive game, you played {Constants.num_rounds} rounds. "
                 f"You earned {interactive_payoffs[0]} in the first round, "
                 f"{interactive_payoffs[1]} in the second round, "

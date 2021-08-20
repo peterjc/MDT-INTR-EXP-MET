@@ -5,7 +5,7 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'GBP'
 USE_POINTS = True
 DEMO_PAGE_INTRO_HTML = ''
-PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteer_community_centre_msg']
+PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteering_msg']
 SESSION_FIELDS = []
 ROOMS = []
 
