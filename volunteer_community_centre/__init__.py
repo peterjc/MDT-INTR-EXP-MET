@@ -117,7 +117,6 @@ class Results(Page):
     @staticmethod
     def vars_for_template(player):
         session = player.session
-        subsession = player.subsession
         group = player.group
         participant = player.participant
         from otree.settings import POINTS_CUSTOM_NAME
@@ -125,8 +124,8 @@ class Results(Page):
         # Rules and payoff depend on round...
         # See also the instructions reminder on the Volunteering page
         msg = "<p>Thanks for making your choice.</p>"
-        # Was this player first to volunteer?
-        players = subsession.get_players()
+        # Was this player first to volunteer in their group?
+        players = group.get_players()
         if player.round_number in [1, 2, 5]:
             # Initial rules - self-less volunteer
             no_volunteers_payoff = cu(0)
