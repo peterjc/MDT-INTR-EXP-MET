@@ -2,9 +2,9 @@
 from otree.api import *
 c = cu
 
-doc = 'Multi-round volunteer dilemma framed as running a community centre.'
+doc = 'Multi-round volunteer dilemma with treatment specific framing (e.g. community centre).'
 class Constants(BaseConstants):
-    name_in_url = 'volunteer_community_centre'
+    name_in_url = 'volunteering'
     players_per_group = 6
     num_rounds = 5
     volunteer_timeout = 15
