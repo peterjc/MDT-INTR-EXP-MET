@@ -93,10 +93,14 @@ class Volunteering(Page):
         return Constants.volunteer_timeout - time.time() + group.start_timestamp > 1
     @staticmethod
     def vars_for_template(player):
-        participant = player.participant
-        # In round 1, the Volunteering page recorded the instructions here.
-        # After each round we set this up in the Results page for the next round
-        return {"instructions": participant.volunteer_community_centre_msg}
+        group = player.group
+        if player.round_number in [1, 2, 5]:
+            # Self-less volunteer:
+            instructions = f"<p>To volunteer you need to click the button before the end of the {Constants.volunteer_timeout} seconds. If no one in your group volunteers, all of you earn {cu(0)}. If one person volunteers, this person earns {cu(0)} and the other members of the group earn {cu(50)}. Only the person who volunteers first earns {cu(0)}: those who will possibly volunteer after them will receive {cu(50)}. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of this round.</p>"
+        else:
+            # Compensated volunteer:
+            instructions = f"<p>To volunteer you need to click the button before the end of the {Constants.volunteer_timeout} seconds. If no one in your group volunteers, all of you earn {cu(0)}. If one person volunteers, this person earns 50 points and the other members of the group earn {cu(40)}. Only the person who volunteers first earns {cu(50)}: those who will possibly volunteer after them will receive {cu(40)}. At the end of the {Constants.volunteer_timeout} seconds, you will be automatically redirected to the page with the results of this round.</p>"
+        return {"instructions": instructions}
     @staticmethod
     def before_next_page(player, timeout_happened):
         group = player.group
@@ -119,7 +123,7 @@ class Results(Page):
         from otree.settings import POINTS_CUSTOM_NAME
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
         # Rules and payoff depend on round...
-        instructions = "<p>Click the button to volunteer, or wait for the timer to finish.</p>"
+        # See also the instructions reminder on the Volunteering page
         msg = "<p>Thanks for making your choice.</p>"
         # Was this player first to volunteer?
         players = subsession.get_players()
@@ -161,23 +165,23 @@ class Results(Page):
             raise RuntimeError(f"ERROR - Unexpected round number {player.round_number}")
         # Instructions change round by round...
         if player.round_number == 1:
-            instructions = """
+            msg += """
         <p>Now we will play a second round of the game, which will follow exactly the same rules of this one. The second round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
         """
         elif player.round_number == 2:
             # TODO - pull scores from code? Tricky as this is about the NEXT round
-            instructions = f"""
+            msg += f"""
         <p>Now we will play a third round of the game, which will follow slightly different rules. Again, at least one person in your group needs to volunteer in order for you to earn some {units}, meaning that if no one volunteers, no one will earn any {units}. As previously, if there is a volunteer, all other participants benefit by {cu(50)}. However, in this round, all of the other participants will transfer 10 of their  {cu(50)} to the volunteer. Practically this means that in this third round the volunteer will earn  {cu(50)}, while the other participants will earn {cu(40)} points. Only the participant who volunteers first will earn the  {cu(50)}; if you decide to volunteer but someone else has volunteered before you, you will earn  {cu(40)} points. Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tidies up afterwards.</p>
         <p>Do you have any questions? If so, please raise your hand virtually. A member of the experimental team will answer your question for everyone.</p>
         <p>The third round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page</p>
         """
         elif player.round_number == 3:
-            instructions = """
+            msg += """
         <p>Now we will play a fourth round of the game, which will follow exactly the same rules of the third one. The fourth round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the "Next" button below.</p>
         """
         elif player.round_number == 4:
             # TODO - pull scores from code?
-            instructions = f"""
+            msg += f"""
         <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds. The volunteer will have to pay a cost of {cu(50)}, meaning that they will not earn any {units}. If at least one participant volunteers, everyone apart from them will earn {cu(50)}. Only the participant who volunteers first will have to pay the {cu(50)}, and thus overall will not earn any {units}. Anyone who volunteers after them will earn {cu(50)}. If no one volunteers, no one will earn any {units}. Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more.</p>
         <p>The final round will start when everyone in your group has clicked on "Next" the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the "Volunteer" button. When you are ready, please click on the "Next" button below. The instructions will remain available at the bottom of the page.</p>
         """
@@ -187,7 +191,7 @@ class Results(Page):
         """
         else:
             raise RuntimeError(f"ERROR - unexpected round number {player.round_number}")
-        # Record the instructions (for the reminder) or final results text
+        # Record final results text via participant field:
         if player.round_number == Constants.num_rounds:
             interactive_payoffs = [player.in_round(i+1).payoff for i in range(Constants.num_rounds)]
             participant.volunteer_community_centre_msg = (
@@ -199,8 +203,5 @@ class Results(Page):
                 f"and {interactive_payoffs[4]} in the fifth round, "
                 f"for a total of <b>{sum(interactive_payoffs)}</b>."
             )
-        else:
-            participant.volunteer_community_centre_msg = instructions
-            msg += instructions
         return {"message": msg}
 page_sequence = [Instructions, Understanding, Understood, WaitToStart, Volunteering, Results]
