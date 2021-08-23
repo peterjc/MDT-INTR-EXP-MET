@@ -6,11 +6,19 @@ from . import Instructions, Understanding, Understood, Volunteering, Results
 class PlayerBot(Bot):
 
     cases = ["never", "all"]
-
     pre_game_payoff = {}
 
     def play_round(self):
+        if self.participant.volunteering_framing:
+            right_framing = "community centre"
+            wrong_framing = "farmer"
+        else:
+            right_framing = "farmer"
+            wrong_framing = "community centre"
         if self.round_number == 1:
+            assert ("community centre" in str(self.html).lower() or "farmer" in str(self.html).lower()), str(self.html)
+            expect(wrong_framing, "not in", self.html)
+            expect(right_framing, "in", self.html)
             yield Instructions
             yield Understanding, {
                 "understanding1": 0,
@@ -64,4 +72,6 @@ class PlayerBot(Bot):
                         self.participant.payoff,
                         230 + self.pre_game_payoff[self.participant.id],
                     )
+        # Check wording in the results / next round instructions:
+        expect(wrong_framing, "not in", self.html)
         yield Results

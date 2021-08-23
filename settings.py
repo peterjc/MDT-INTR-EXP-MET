@@ -1,11 +1,11 @@
 from os import environ
 SESSION_CONFIG_DEFAULTS = dict(real_world_currency_per_point=0.05, participation_fee=5)
-SESSION_CONFIGS = [dict(name='complete_session', num_demo_participants=18, app_sequence=['risk_attitude', 'volunteering', 'questionnaire_and_payment'])]
+SESSION_CONFIGS = [dict(name='complete_session', num_demo_participants=18, app_sequence=['risk_attitude', 'volunteering', 'questionnaire_and_payment']), dict(name='just_volunteering', num_demo_participants=None, app_sequence=['volunteering'])]
 LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'GBP'
 USE_POINTS = True
 DEMO_PAGE_INTRO_HTML = ''
-PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteering_msg']
+PARTICIPANT_FIELDS = ['risk_attitude_msg', 'volunteering_msg', 'volunteering_framing']
 SESSION_FIELDS = []
 ROOMS = []
 
