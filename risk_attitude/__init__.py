@@ -66,7 +66,7 @@ class Introduction(Page):
         from otree.settings import REAL_WORLD_CURRENCY_CODE
         from otree.currency import RealWorldCurrency
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
-        factor = cu(1 / player.session.config['real_world_currency_per_point'])
+        factor = cu(1 / session.config['real_world_currency_per_point'])
         rate = f"{REAL_WORLD_CURRENCY_CODE} at a rate of {RealWorldCurrency(1)} per every {factor}"
         return {"units": units, "rate": rate}
 class LotteryInstructions(Page):
