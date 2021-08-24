@@ -44,3 +44,26 @@ production server (with ``otree prodserver``).
 Or, to run on the cloud, the example directory must be re-compressed (which
 can be done with the ``otree zip`` command), and then uploaded to `oTree Hub
 <https://www.otreehub.com/my_projects/>`__ for deployment on Heroku.
+
+
+Usage
+-----
+
+Once the oTree server is running, the "Demo" page offers some pre-configured
+examples with small number of players for testing purposes. The "Sessions"
+page should be used to create real sessions, and allows access to the number
+of players, participation fee, points to currency rate, and custom parameters.
+
+The volunteering dilemma game includes multiple framings (called treatments in
+the oTree documentation) which change the text but not the game rules and
+payoffs. This is controlled with a custom integer session parameter "framing".
+The default configuration offers multiple suggested sessions:
+
+* ``alternative_framing`` using ``framing=0`` (alternates at group level)
+* ``farmer_framing`` using ``framing=1`` (applies to all participants)
+* ``community_framing`` using ``framing=2`` (applies to all participants)
+
+You suggest one large ``alternative_framing`` session where oTree controls
+which participant gets which framing, or two smaller parallel sessions of
+``farmer_framing`` and ``community_framing`` which lets you control which
+session, and thus which framing, each participant is assigned to.

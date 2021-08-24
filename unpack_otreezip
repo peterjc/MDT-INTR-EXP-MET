@@ -54,7 +54,12 @@ def main():
     tar_ball = inputs[-1]
 
     run(f"tar -zxvf {downloads}/{tar_ball}")
+    # Cannot set DEMO_PAGE_INTRO_HTML in oTree Studio:
     run("""echo "DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about volunteering. <a href=\\\"https://github.com/peterjc/MDT-INTR-EXP-MET\\\">Source code on GitHub</a>.'" >> settings.py""")
+    # Cannot set custom session parameters in free oTree Studio:
+    run("""sed -i.bak "s#name='alternating_framing', num_demo_participants=#name='alternating_framing', framing=0, num_demo_participants=#g" settings.py""")
+    run("""sed -i.bak "s#name='farmer_framing', num_demo_participants=#name='farmer_framing', framing=1, num_demo_participants=#g" settings.py""")
+    run("""sed -i.bak "s#name='community_centre_framing', num_demo_participants=#name='community_centre_framing', framing=2, num_demo_participants=#g" settings.py""")
     # run("""echo "POINTS_CUSTOM_NAME = 'tokens'" >> settings.py""")
     # run("black")
 

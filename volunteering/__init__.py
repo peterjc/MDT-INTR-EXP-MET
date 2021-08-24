@@ -12,12 +12,22 @@ def creating_session(subsession):
     session = subsession.session
     if subsession.round_number == 1:
         # Assign group level framing & cache as participant value
-        for i, group in enumerate(subsession.get_groups()):
-            framing = bool(i % 2)
-            print(f"Setting {i+1}th group to {framing}")
-            for player in group.get_players():
-                print(f" - {player.participant.id}")
+        framing = session.config.get('framing', 0)
+        if not framing:
+            for i, group in enumerate(subsession.get_groups()):
+                framing = bool(i % 2)
+                print(f"Setting {i+1}th group framing to {framing}")
+                for player in group.get_players():
+                    player.participant.volunteering_framing = framing
+        elif int(framing) in (1, 2):
+            framing = bool(int(framing) - 1)
+            print(f"Setting all groups' framing to {framing}")
+            for player in subsession.get_players():
                 player.participant.volunteering_framing = framing
+        else:
+            raise ValueError(
+                f"Expected session framing of 0 (alternating), 1 or 2. Not {framing!r}"
+            )
     elif subsession.round_number > 1:
         # Verify groups members still have same framing
         for group in subsession.get_groups():
