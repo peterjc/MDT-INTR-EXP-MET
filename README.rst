@@ -59,11 +59,8 @@ the oTree documentation) which change the text but not the game rules and
 payoffs. This is controlled with a custom integer session parameter "framing".
 The default configuration offers multiple suggested sessions:
 
-* ``alternative_framing`` using ``framing=0`` (alternates at group level)
-* ``farmer_framing`` using ``framing=1`` (for to all participants)
-* ``community_centre_framing`` using ``framing=2`` (for to all participants)
+* ``farmer_framing`` using ``framing=0`` (for all participants)
+* ``community_centre_framing`` using ``framing=1`` (for all participants)
 
-You suggest one large ``alternative_framing`` session where oTree controls
-which participant gets which framing, or two smaller parallel sessions of
-``farmer_framing`` and ``community_centre_framing`` which lets you control
-which session, and thus which framing, each participant is assigned to.
+We run parallel sessions for each framing, giving control over which session,
+and thus which framing, each participant is assigned to.

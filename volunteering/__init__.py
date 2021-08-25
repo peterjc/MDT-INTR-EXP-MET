@@ -8,31 +8,6 @@ class Constants(BaseConstants):
     players_per_group = 6
     num_rounds = 5
     volunteer_timeout = 15
-def creating_session(subsession):
-    session = subsession.session
-    if subsession.round_number == 1:
-        # Assign group level framing & cache as participant value
-        framing = session.config.get('framing', 0)
-        if not framing:
-            for i, group in enumerate(subsession.get_groups()):
-                framing = bool(i % 2)
-                print(f"Setting {i+1}th group framing to {framing}")
-                for player in group.get_players():
-                    player.participant.volunteering_framing = framing
-        elif int(framing) in (1, 2):
-            framing = bool(int(framing) - 1)
-            print(f"Setting all groups' framing to {framing}")
-            for player in subsession.get_players():
-                player.participant.volunteering_framing = framing
-        else:
-            raise ValueError(
-                f"Expected session framing of 0 (alternating), 1 or 2. Not {framing!r}"
-            )
-    elif subsession.round_number > 1:
-        # Verify groups members still have same framing
-        for group in subsession.get_groups():
-            temp = {player.participant.volunteering_framing for player in group.get_players()}
-            assert len(temp) == 1, temp  # groups changed?
 class Subsession(BaseSubsession):
     pass
 def record_round_start(group):
@@ -56,6 +31,12 @@ class Player(BasePlayer):
     understanding1 = models.IntegerField(label='No one in your group volunteers within the time available. How many points will you earn?', min=0)
     understanding2 = models.IntegerField(label='You volunteer but someone else has volunteered before you. How many points will you earn? ', min=0)
     understanding3 = models.IntegerField(label='How many points will you earn if you volunteer first?', min=0)
+class WaitAndGroup(WaitPage):
+    group_by_arrival_time = True
+    title_text = 'Waiting for other players to begin'
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 class Instructions(Page):
     form_model = 'player'
     @staticmethod
@@ -63,17 +44,21 @@ class Instructions(Page):
         return player.round_number == 1
     @staticmethod
     def vars_for_template(player):
+        session = player.session
         group = player.group
         participant = player.participant
         from otree.settings import POINTS_CUSTOM_NAME
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
-        if participant.volunteering_framing:
+        volunteering_framing = bool(session.config.get('framing', 0))
+        if volunteering_framing:
+            # framing=1 gives True, Community Centre
             framing_msg = f"""
         <p>
         Imagine that the {Constants.players_per_group} people in your group reside in the same small rural community. In your community there is a community centre where people can meet during the day to have a coffee together and do a series of activities. All the residents have access to the centre but in order to enjoy this space, someone must open it and prepare the rooms as well as make order and clean afterwards. If no one volunteers to do this, the centre remains closed. The activities implemented in the centre benefit the residents attending.  This benefit has a value of {cu(50)}, while the volunteers incur personal costs in terms of time and energy that cancel out the benefits from the activities implemented in the centre.
         </p>
         """
         else:
+            # framing=0 gives False, farmers
             framing_msg = f"""
         <p>
         Imagine that the {Constants.players_per_group} people in your group reside in the same small rural community are {Constants.players_per_group} farmers located next to a river on a catchment area subject to regular flooding that affects them all. To prevent flooding, a flood expansion plain could be created on one of the {Constants.players_per_group} farmers’ fields. This would mean that 1 farmer would lose the production from the field converted into a flood expansion plain. This loss has a value of {cu(50)} in the game. If the flood expansion plain is created, all {Constants.players_per_group} farmers would be protected from floods, would avoid the costs associated with floods, and would save the equivalent of {cu(50)} each. This means that the farmer who volunteers will be left with {cu(0)}, and the {Constants.players_per_group - 1} other farmers with {cu(50)} each at the end of the round.
@@ -163,6 +148,7 @@ class Results(Page):
         participant = player.participant
         from otree.settings import POINTS_CUSTOM_NAME
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
+        volunteering_framing = bool(session.config.get('framing', 0))
         # Rules and payoff depend on round...
         # See also the instructions reminder on the Volunteering page
         msg = "<p>Thanks for making your choice.</p>"
@@ -211,7 +197,7 @@ class Results(Page):
         """
         elif player.round_number == 2:
             # TODO - pull scores from code? Tricky as this is about the NEXT round
-            if participant.volunteering_framing:
+            if volunteering_framing:
                 framing_msg = "Imagine that your small rural community has decided that to access the community centre, residents have to pay a fee, which will be used to compensate the person who prepares the rooms and tidies up afterwards."
             else:
                 framing_msg = "Imagine that the group of farmers has decided to compensate the volunteering farmer for the provision of the flood protection service provided to the catchment."
@@ -235,7 +221,7 @@ class Results(Page):
         """
         elif player.round_number == 4:
             # TODO - pull scores from code?
-            if participant.volunteering_framing:
+            if volunteering_framing:
                 framing_msg = "Imagine that after some discussions, it was decided in your community to lift the fee for attending the community centre; therefore, the volunteer will not be compensated any more."
             else:
                 framing_msg = "Imagine that after some discussions, it was decided in the catchment to lift the compensation scheme for the farmer who volunteers; therefore, the volunteer will not be compensated any more."
@@ -264,4 +250,4 @@ class Results(Page):
                 f"for a total of <b>{sum(interactive_payoffs)}</b>."
             )
         return {"message": msg}
-page_sequence = [Instructions, Understanding, Understood, WaitToStart, Volunteering, Results]
+page_sequence = [WaitAndGroup, Instructions, Understanding, Understood, WaitToStart, Volunteering, Results]
