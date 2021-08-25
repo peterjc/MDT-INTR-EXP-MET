@@ -9,7 +9,14 @@ class PlayerBot(Bot):
     pre_game_payoff = {}
 
     def play_round(self):
-        if self.participant.volunteering_framing:
+        if self.session.config["name"] == "farmer_framing":
+            # framing=0 gives False, farmers
+            expect(self.session.config.get('framing', None), 0)
+        elif self.session.config["name"] == "community_centre_framing":
+            # framing=1 gives True, Community Centre
+            expect(self.session.config.get('framing', None), 1)
+        volunteering_framing = bool(self.session.config.get('framing', 0))
+        if volunteering_framing:
             right_framing = "community centre"
             wrong_framing = "farmer"
         else:
