@@ -4,7 +4,7 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Check out repository code
+      - name: 🗄️ Check out repository code
         uses: actions/checkout@v2
       - name: 📦 Installing pre-commit checks
         run: |
@@ -17,8 +17,7 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "ℹ️ Triggered by a ${{ github.event_name }} event, running ${{ github.ref }} on ${{ runner.os }}"
-      - name: 🚚 Check out repository code
+      - name: 🗄️ Check out repository code
         uses: actions/checkout@v2
       - name: 📦 Install oTree dependencies
         run: |
