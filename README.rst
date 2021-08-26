@@ -1,3 +1,10 @@
+.. image:: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml/badge.svg
+   :alt: GitHub Actions Continous Integration Status
+   :target: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml
+.. image:: https://img.shields.io/github/license/peterjc/MDT-INTR-EXP-MET.svg
+   :alt: MIT License
+   :target: https://github.com/peterjc/thapbi-pict/blob/master/LICENSE.rst
+
 Economics behavioural experiment using oTree
 ============================================
 
