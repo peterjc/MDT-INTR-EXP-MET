@@ -1,4 +1,4 @@
-name: Misc GitHub Actions
+name: GitHub Actions
 on: [push]
 jobs:
   Lint:
