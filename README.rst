@@ -1,3 +1,6 @@
+.. image:: https://results.pre-commit.ci/badge/github/peterjc/MDT-INTR-EXP-MET/master.svg
+   :target: https://results.pre-commit.ci/latest/github/peterjc/MDT-INTR-EXP-MET/master
+   :alt: pre-commit.ci status
 .. image:: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml/badge.svg
    :alt: GitHub Actions Continous Integration Status
    :target: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml
