@@ -21,6 +21,7 @@ Here ``unpack_otreezip`` is a script which streamlines finding the latest
 For the git commit, beware that additional care is needed if any of the folder
 names have changed (by creating or renaming an "App" within oTree Studio).
 
+Practically, coding style is enforced with a git pre-commit hook, see below.
 If the changes fail our pre-commit hook objects, fixes need to be made within
 oTree (e.g. remove trailing whitespace), and a fresh tar-ball downloaded,
 unzipped, and committed instead.
@@ -30,6 +31,10 @@ Studio!
 
 Files outside of oTree Studio include the text documentation, and test bots
 ``*/tests.py`` (functionality not available in the basic oTree Studio tier).
+
+Once changes are push to the repository on GitHub, this triggers the
+``pre-commit`` checks (see below) and runs ``otree test`` via GitHub Actions
+(although both should be used locally ideally).
 
 For deployment to oTree Hub and Heroku, we need to zip the files up again.
 We could use ``otree zip`` but that will include any incidental files not
@@ -59,8 +64,8 @@ You can install these tools using:
     $ pip install pre-commit
     $ pre-commit install  # within the repository main directory
 
-The checks will then run automatically when you make a git commit. You can
-also run the checks directly using:
+The checks will then run automatically locally when you make a git commit. You
+can also run the checks directly using:
 
 .. code:: console
 
