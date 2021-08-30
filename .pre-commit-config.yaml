@@ -1,7 +1,7 @@
 # pre-commit run --all-files
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
     -   id: check-added-large-files
     -   id: check-case-conflict
@@ -23,8 +23,8 @@ repos:
         entry: '\t'
         language: pygrep
         files: \.(py|sh|rst|yml|yaml)$
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.1
+-   repo: https://github.com/PyCQA/flake8
+    rev: 3.9.2
     hooks:
     -   id: flake8
         additional_dependencies: [
