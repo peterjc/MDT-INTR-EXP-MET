@@ -19,4 +19,5 @@ SECRET_KEY = 'blahblah'
 INSTALLED_APPS = ['otree']
 
 
+DEMO_PAGE_TITLE = 'MDT project INTR-EXP-MET - oTree Demo'
 DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about volunteering. <a href="https://github.com/peterjc/MDT-INTR-EXP-MET">Source code on GitHub</a>.'
