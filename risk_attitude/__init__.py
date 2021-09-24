@@ -17,8 +17,8 @@ class Group(BaseGroup):
     pass
 def lottery_choices(player):
     return [
-        [True, f'A: 🔴&nbsp;=&nbsp;{Constants.payoff_red_A}, ⚪&nbsp;=&nbsp;{Constants.payoff_white_A}'],
-        [False, f'B: 🔴&nbsp;=&nbsp;{Constants.payoff_red_B}, ⚪&nbsp;=&nbsp;{Constants.payoff_white_B}']
+        [True, f'A: 🔴 = {Constants.payoff_red_A}, ⚪ = {Constants.payoff_white_A}'],
+        [False, f'B: 🔴 = {Constants.payoff_red_B}, ⚪ = {Constants.payoff_white_B}']
     ]
 def lottery1_choices(player):
     return lottery_choices(player)
