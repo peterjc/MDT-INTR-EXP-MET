@@ -106,7 +106,7 @@ class Understood(Page):
     def is_displayed(player):
         return player.round_number == 1
 class WaitToStart(WaitPage):
-    after_all_players_arrive = 'record_round_start'
+    after_all_players_arrive = record_round_start
     title_text = 'Waiting for other players to begin'
 class Volunteering(Page):
     form_model = 'player'
