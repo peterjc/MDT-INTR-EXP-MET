@@ -1,10 +1,12 @@
 from otree.api import Bot, expect
 
-from . import Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
+from . import InfoSheet, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
 
 
 class PlayerBot(Bot):
     def play_round(self):
+        expect("Macaulay Development Trust", "in", self.html)
+        yield InfoSheet
         expect(
             "You will receive £5.00 to thank you for your participation today.",
             "in",

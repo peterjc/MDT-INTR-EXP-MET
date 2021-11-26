@@ -57,6 +57,8 @@ class Player(BasePlayer):
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
     lottery_understanding = models.IntegerField(min=0)
+class InfoSheet(Page):
+    form_model = 'player'
 class Introduction(Page):
     form_model = 'player'
     @staticmethod
@@ -138,4 +140,4 @@ class LotteryDecision(Page):
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
-page_sequence = [Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
+page_sequence = [InfoSheet, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
