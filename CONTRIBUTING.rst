@@ -19,7 +19,8 @@ Here ``unpack_otreezip`` is a script which streamlines finding the latest
 ``~/Downloads/*-MDT-INTR-EXP-MET.otreezip`` and calling ``otree unzip``.
 
 For the git commit, beware that additional care is needed if any of the folder
-names have changed (by creating or renaming an "App" within oTree Studio).
+or file names have changed (by adding, renaming or removing an "App" or "Page"
+within oTree Studio).
 
 Practically, coding style is enforced with a git pre-commit hook, see below.
 If the changes fail our pre-commit hook objects, fixes need to be made within
@@ -32,9 +33,9 @@ Studio!
 Files outside of oTree Studio include the text documentation, and test bots
 ``*/tests.py`` (functionality not available in the basic oTree Studio tier).
 
-Once changes are push to the repository on GitHub, this triggers the
+Once changes are pushed to the repository on GitHub, this triggers the
 ``pre-commit`` checks (see below) and runs ``otree test`` via GitHub Actions
-(although both should be used locally ideally).
+(although ideally both should be used locally).
 
 For deployment to oTree Hub and Heroku, we need to zip the files up again.
 We could use ``otree zip`` but that will include any incidental files not
