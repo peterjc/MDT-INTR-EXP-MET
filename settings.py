@@ -1,5 +1,5 @@
 from os import environ
-SESSION_CONFIG_DEFAULTS = dict(real_world_currency_per_point=0.05, participation_fee=5)
+SESSION_CONFIG_DEFAULTS = dict(real_world_currency_per_point=0.1, participation_fee=5)
 SESSION_CONFIGS = [dict(name='farmer_framing', framing=0, num_demo_participants=None, app_sequence=['risk_attitude', 'volunteering', 'questionnaire_and_payment']), dict(name='community_centre_framing', framing=1, num_demo_participants=None, app_sequence=['risk_attitude', 'volunteering', 'questionnaire_and_payment'])]
 LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'GBP'

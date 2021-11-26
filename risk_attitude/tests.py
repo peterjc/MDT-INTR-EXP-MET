@@ -15,7 +15,7 @@ class PlayerBot(Bot):
             self.html,
         )
         expect(
-            "into GBP at a rate of £1.00 per every 20 points.",
+            "into GBP at a rate of £1.00 per every 10 points.",
             "in",
             self.html,
         )
