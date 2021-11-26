@@ -15,15 +15,14 @@ three letter prefix from oTree Studio's download function.
 After unzipping, applies some post-processing changes to use functionality not
 available in oTree Studio:
 
-* Setting ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
+* Setting ``DEMO_PAGE_TITLE`` and ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
 
 Could go further:
 
 * Adding ``POINTS_CUSTOM_NAME = 'tokens'`` to ``settings.py``
-* Setting ``DEMO_PAGE_INTRO_HTML`` in ``settings.py``
 * Running black
 * Replacing "from otree.api import *"
-* Adding things to .gitignore (or reverting the oTree Studio changes)
+* Adding things to .gitignore (or reverting the oTree Studio changes there)
 """
 
 import os
