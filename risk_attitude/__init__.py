@@ -11,6 +11,7 @@ class Constants(BaseConstants):
     payoff_white_A = 32
     payoff_red_B = 77
     payoff_white_B = 2
+    info_sheet_date = 'January 2022'
 class Subsession(BaseSubsession):
     pass
 class Group(BaseGroup):
@@ -43,6 +44,9 @@ def lottery10_choices(player):
 def lottery_understanding_error_message(player, value):
     if value != Constants.payoff_white_A:
         return f"Your answer is wrong. For lottery A you have a 30% probability of earning {cu(Constants.payoff_red_A)} (if a red ball is extracted) and a 70% probability of earning {cu(Constants.payoff_white_A)} (if a white ball is extracted). Since a white ball was extracted, you earn {cu(Constants.payoff_white_A)}"
+def consent_error_message(player, value):
+    if not value:
+        return "You must consent in order to take part."
 class Player(BasePlayer):
     lottery1 = models.BooleanField()
     lottery2 = models.BooleanField()
@@ -57,8 +61,12 @@ class Player(BasePlayer):
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
     lottery_understanding = models.IntegerField(min=0)
+    consent = models.BooleanField()
 class InfoSheet(Page):
     form_model = 'player'
+class Consent(Page):
+    form_model = 'player'
+    form_fields = ['consent']
 class Introduction(Page):
     form_model = 'player'
     @staticmethod
@@ -140,4 +148,4 @@ class LotteryDecision(Page):
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
-page_sequence = [InfoSheet, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
+page_sequence = [InfoSheet, Consent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]

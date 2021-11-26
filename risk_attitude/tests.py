@@ -1,12 +1,14 @@
 from otree.api import Bot, expect
 
-from . import InfoSheet, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
+from . import InfoSheet, Consent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
 
 
 class PlayerBot(Bot):
     def play_round(self):
         expect("Macaulay Development Trust", "in", self.html)
         yield InfoSheet
+        expect("I agree to take part in the experimental session.", "in", self.html)
+        yield Consent, {"consent": True}
         expect(
             "You will receive £5.00 to thank you for your participation today.",
             "in",
