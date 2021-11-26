@@ -67,6 +67,8 @@ class InfoSheet(Page):
 class Consent(Page):
     form_model = 'player'
     form_fields = ['consent']
+class WaitAfterConsent(WaitPage):
+    pass
 class Introduction(Page):
     form_model = 'player'
     @staticmethod
@@ -148,4 +150,4 @@ class LotteryDecision(Page):
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
-page_sequence = [InfoSheet, Consent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
+page_sequence = [InfoSheet, Consent, WaitAfterConsent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
