@@ -62,7 +62,9 @@ def main():
     run("""sed -i.bak "s#name='community_centre_framing', num_demo_participants=#name='community_centre_framing', framing=1, num_demo_participants=#g" settings.py""")
     # run("""echo "POINTS_CUSTOM_NAME = 'tokens'" >> settings.py""")
     # run("black")
-
+    print("----")
+    print("Done")
+    print("----")
 
 if __name__ == "__main__":
     main()
