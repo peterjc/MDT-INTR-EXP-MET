@@ -8,13 +8,14 @@ class Constants(BaseConstants):
     players_per_group = 6
     num_rounds = 5
     volunteer_timeout = 15
-class Subsession(BaseSubsession):
-    pass
-def record_round_start(group):
+def record_round_start(subsession):
+    session = subsession.session
     import time
-    group.start_timestamp = time.time()
-class Group(BaseGroup):
+    subsession.start_timestamp = time.time()
+class Subsession(BaseSubsession):
     start_timestamp = models.FloatField()
+class Group(BaseGroup):
+    pass
 def understanding1_error_message(player, value):
     group = player.group
     if value != 0:
@@ -32,7 +33,7 @@ class Player(BasePlayer):
     understanding2 = models.IntegerField(label='You volunteer but someone else has volunteered before you. How many points will you earn? ', min=0)
     understanding3 = models.IntegerField(label='How many points will you earn if you volunteer first?', min=0)
 class WaitAndGroup(WaitPage):
-    group_by_arrival_time = True
+    wait_for_all_groups = True
     title_text = 'Waiting for other players to begin'
     @staticmethod
     def is_displayed(player):
@@ -106,6 +107,7 @@ class Understood(Page):
     def is_displayed(player):
         return player.round_number == 1
 class WaitToStart(WaitPage):
+    wait_for_all_groups = True
     after_all_players_arrive = record_round_start
     title_text = 'Waiting for other players to begin'
 class Volunteering(Page):
@@ -114,10 +116,11 @@ class Volunteering(Page):
     timer_text = 'You have 15 seconds to decide.'
     @staticmethod
     def is_displayed(player):
-        group = player.group
+        session = player.session
+        subsession = player.subsession
         # Expecting will always be (just under) 15s left,
         import time
-        return Constants.volunteer_timeout - time.time() + group.start_timestamp > 1
+        return Constants.volunteer_timeout - time.time() + subsession.start_timestamp > 1
     @staticmethod
     def vars_for_template(player):
         group = player.group
@@ -130,15 +133,17 @@ class Volunteering(Page):
         return {"instructions": instructions}
     @staticmethod
     def before_next_page(player, timeout_happened):
-        group = player.group
+        session = player.session
+        subsession = player.subsession
         import time  # hack, want this at top level really
         # Convert to a relative timestamp (in seconds):
-        player.submission_timestamp = time.time() - group.start_timestamp
+        player.submission_timestamp = time.time() - subsession.start_timestamp
     @staticmethod
     def get_timeout_seconds(player):
-        group = player.group
+        session = player.session
+        subsession = player.subsession
         import time
-        return Constants.volunteer_timeout - time.time() + group.start_timestamp
+        return Constants.volunteer_timeout - time.time() + subsession.start_timestamp
 class Results(Page):
     form_model = 'player'
     @staticmethod
