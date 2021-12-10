@@ -55,8 +55,8 @@ def main():
     run(f"tar -zxvf {downloads}/{tar_ball}")
     # Cannot set DEMO_PAGE_TITLE in oTree Studio:
     run("""echo "DEMO_PAGE_TITLE = 'MDT project INTR-EXP-MET - oTree Demo'" >> settings.py""")
-    # Cannot set DEMO_PAGE_INTRO_HTML in oTree Studio:
-    run("""echo "DEMO_PAGE_INTRO_HTML = 'Risk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about volunteering. <a href=\\\"https://github.com/peterjc/MDT-INTR-EXP-MET\\\">Source code on GitHub</a>.'" >> settings.py""")
+    # Cannot set DEMO_PAGE_INTRO_HTML in oTree Studio (must use triple quotes):
+    run('''printf 'DEMO_PAGE_INTRO_HTML = """\nRisk attitude lottery game based on Holt and Laury (2002), followed by an interactive multi-player game about volunteering. <a href=\\\"https://github.com/peterjc/MDT-INTR-EXP-MET\\\">Source code on GitHub</a>.\n"""\n' >> settings.py''')
     # Cannot set custom session parameters in free oTree Studio:
     run("""sed -i.bak "s#name='farmer_framing', num_demo_participants=#name='farmer_framing', framing=0, num_demo_participants=#g" settings.py""")
     run("""sed -i.bak "s#name='community_centre_framing', num_demo_participants=#name='community_centre_framing', framing=1, num_demo_participants=#g" settings.py""")
