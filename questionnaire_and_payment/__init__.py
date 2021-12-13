@@ -35,4 +35,6 @@ class Payments(Page):
             "risk_attitude_msg": participant.risk_attitude_msg,
             "volunteering_msg": participant.volunteering_msg,
         }
-page_sequence = [Questionnaire, Payments]
+class TheEnd(Page):
+    form_model = 'player'
+page_sequence = [Questionnaire, Payments, TheEnd]
