@@ -218,11 +218,11 @@ class Results(Page):
         </ol>
         </p>
         <p>Do you have any questions? If so, please raise your hand virtually. A member of the experimental team will answer your question for everyone.</p>
-        <p>The third round will start when everyone in your group has clicked on ‘Next’ the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page</p>
+        <p>The third round will start when everyone in your group has clicked on the ‘Next’ button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page</p>
         """
         elif player.round_number == 3:
             msg += """
-        <p>Now we will play a fourth round of the game, which will follow exactly the same rules of the third one. The fourth round will start when everyone in your group has clicked on ‘Next’ the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below.</p>
+        <p>Now we will play a fourth round of the game, which will follow exactly the same rules of the third one. The fourth round will start when everyone in your group has clicked on the ‘Next’ button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below.</p>
         """
         elif player.round_number == 4:
             # TODO - pull scores from code?
@@ -234,7 +234,7 @@ class Results(Page):
         <p>Now we will play the final round of this game, which will follow exactly the same rules of the first two rounds.<p>
         <p>{framing_msg}</p>
         <p>The volunteer will have to pay a cost of {cu(50)}, meaning that they will not earn any {units}. If at least one participant volunteers, everyone apart from them will earn {cu(50)}. Only the participant who volunteers first will have to pay the {cu(50)}, and thus overall will not earn any {units}. Anyone who volunteers after them will earn {cu(50)}. If no one volunteers, no one will earn any {units}.</p>
-        <p>The final round will start when everyone in your group has clicked on ‘Next’ the button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page.</p>
+        <p>The final round will start when everyone in your group has clicked on the ‘Next’ button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page.</p>
         """
         elif player.round_number == Constants.num_rounds:
             msg += """
