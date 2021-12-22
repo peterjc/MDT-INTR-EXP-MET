@@ -90,7 +90,7 @@ class LotteryUnderstanding(Page):
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
         choices = dict(lottery_choices(player))
         return {
-            "lottery_payoffs": f'{choices[True]}<br />{choices[False]}',
+            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
             "lottery_understanding_label": f'How many {units} would you earn?',
         }
 class LotteryUnderstood(Page):
@@ -99,7 +99,7 @@ class LotteryUnderstood(Page):
     def vars_for_template(player):
         choices = dict(lottery_choices(player))
         return {
-            "lottery_payoffs": f'{choices[True]}<br />{choices[False]}',
+            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
         }
 class LotteryDecision(Page):
     form_model = 'player'
