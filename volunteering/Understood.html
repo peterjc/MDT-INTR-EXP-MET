@@ -4,7 +4,7 @@
 {{ block content }}
 
 <p>
-Now we will play round {{ player.round_number }} of the game. The countdown will start once all {{ Constants.num_rounds }} members of your group have clicked the ‘Next’ button below. To volunteer, you need to click on the ‘Volunteer’ button at the centre of the page. If you do not wish to volunteer, just wait until the end of the {{ Constants.volunteer_timeout }} seconds. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page.
+Now we will play round {{ player.round_number }} of the game. The countdown will start once all {{ Constants.players_per_group }} members of your group have clicked the ‘Next’ button below. To volunteer, you need to click on the ‘Volunteer’ button at the centre of the page. If you do not wish to volunteer, just wait until the end of the {{ Constants.volunteer_timeout }} seconds. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page.
 </p>
 
 {{ formfields }}
