@@ -62,9 +62,7 @@ class Player(BasePlayer):
     lottery_red = models.BooleanField()
     lottery_understanding = models.IntegerField(min=0)
     consent = models.BooleanField()
-class InfoSheet(Page):
-    form_model = 'player'
-class Consent(Page):
+class InfoSheetAndConsent(Page):
     form_model = 'player'
     form_fields = ['consent']
 class WaitAfterConsent(WaitPage):
@@ -150,4 +148,4 @@ class LotteryDecision(Page):
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
-page_sequence = [InfoSheet, Consent, WaitAfterConsent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]
+page_sequence = [InfoSheetAndConsent, WaitAfterConsent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision]

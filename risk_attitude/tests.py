@@ -1,21 +1,25 @@
 from otree.api import Bot, expect
 
-from . import InfoSheet, Consent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
+from . import InfoSheetAndConsent, Introduction, LotteryInstructions, LotteryUnderstanding, LotteryUnderstood, LotteryDecision
 
 
 class PlayerBot(Bot):
     def play_round(self):
         expect("Macaulay Development Trust", "in", self.html)
-        yield InfoSheet
-        expect("I agree to take part in the experimental session.", "in", self.html)
-        yield Consent, {"consent": True}
         expect(
-            "You will receive £5.00 to thank you for your participation today.",
+            "We foresee an average payment of £25, including a participation fee of £5",
+            "in",
+            self.html,
+        )
+        expect("I agree to take part in the experimental session.", "in", self.html)
+        yield InfoSheetAndConsent, {"consent": True}
+        expect(
+            "You will receive £5.00 to thank you for your participation, ",
             "in",
             self.html,
         )
         expect(
-            "into GBP at a rate of £1.00 per every 10 points.",
+            "into GBP at a rate of £1.00 per every 10 points, ",
             "in",
             self.html,
         )
