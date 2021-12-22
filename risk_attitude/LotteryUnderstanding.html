@@ -4,13 +4,27 @@
 {{ block content }}
 
 <p>We will now ask you a question to check that you have understood the instructions of this first game. Please answer it and then click on ‘Next’ below. If your answer is correct, when clicking ‘Next’ you will proceed to the actual decisions; otherwise, you will need to review your answer and try again. Your answer to this question will not affect your final earnings.</p>
+
+<!-- should avoid repeating this CSS -->
+<style>
+.lottery{
+border: 2px solid red;
+border-radius:10px;
+padding:0px;
+width:7.5em;
+height:3.4em;
+text-align:center;
+vertical-align:baseline;
+}
+</style>
+
 <table class="table">
     <thead>
         <th>#</th><th>Red/white ratio</th><th>Lottery A or B?</th>
     </thead>
     <tr>
         <th>3</th>
-        <td><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ lottery_payoffs }}
         </td>
     </tr>

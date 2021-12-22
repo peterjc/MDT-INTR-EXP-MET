@@ -8,58 +8,71 @@
 <!-- Would like to disable the formfield label (to save vertical space), but instead hide it with CCS style rule. -->
 <style> .col-form-label { display: none; } </style>
 
+<!-- should avoid repeating this CSS -->
+<style>
+.lottery{
+border: 2px solid red;
+border-radius:10px;
+padding:0px;
+width:7.5em;
+height:3.4em;
+text-align:center;
+vertical-align:baseline;
+}
+</style>
+
 <table class="table">
     <thead>
         <th>#</th><th>Red/white ratio</th><th>Lottery A or B?</th>
     </thead>
     <tr>
         <th>1</th>
-        <td><p>🔴 ⚪ ⚪ ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 ⚪ ⚪ ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery1' }}</td>
     </tr>
     <tr>
         <th>2</th>
-        <td><p>🔴 🔴 ⚪ ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 ⚪ ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery2' }}</td>
     </tr>
     <tr>
         <th>3</th>
-        <td><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery3' }}</td>
     </tr>
     <tr>
         <th>4</th>
-        <td><p>🔴 🔴 🔴 🔴 ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery4' }}</td>
     </tr>
     <tr>
         <th>5</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery5' }}</td>
     </tr>
     <tr>
         <th>6</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />🔴 ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />🔴 ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery6' }}</td>
     </tr>
     <tr>
         <th>7</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 ⚪ ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery7' }}</td>
     </tr>
     <tr>
         <th>8</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 ⚪ ⚪</p></div></td>
         <td>{{ formfield 'lottery8' }}</td>
     </tr>
     <tr>
         <th>9</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 🔴 ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 🔴 ⚪</p></div></td>
         <td>{{ formfield 'lottery9' }}</td>
     </tr>
     <tr>
         <th>10</th>
-        <td><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 🔴 🔴</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 🔴 🔴<br />🔴 🔴 🔴 🔴 🔴</p></div></td>
         <td>{{ formfield 'lottery10' }}</td>
     </tr>
 </table>

@@ -3,6 +3,19 @@
 
 {{ block content }}
 
+<!-- should avoid repeating this CSS -->
+<style>
+.lottery{
+border: 2px solid red;
+border-radius:10px;
+padding:0px;
+width:7.5em;
+height:3.4em;
+text-align:center;
+vertical-align:baseline;
+}
+</style>
+
 <p>Correct:</p>
 <table class="table">
     <thead>
@@ -10,7 +23,7 @@
     </thead>
     <tr>
         <th>3</th>
-        <td><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></td>
+        <td><div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
         <td>{{ lottery_payoffs }}
         </td>
     </tr>
