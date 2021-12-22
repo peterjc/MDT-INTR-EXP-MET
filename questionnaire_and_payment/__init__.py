@@ -21,7 +21,7 @@ class Player(BasePlayer):
     interactive_others = models.StringField(choices=[['They did not volunteer regardless of the incentive', 'They did not volunteer regardless of the incentive'], ['They volunteered in the non-incentivised rounds, and did not volunteer in the incentivised rounds', 'They volunteered in the non-incentivised rounds, and did not volunteer in the incentivised rounds'], ['They volunteered in the incentivised rounds, and did not volunteer in the non-incentivised rounds', 'They volunteered in the incentivised rounds, and did not volunteer in the non-incentivised rounds'], ['They volunteered regardless of the incentive', 'They volunteered regardless of the incentive'], ['Difficult to say', 'Difficult to say']], label='How do you think that most of the participants in your group played the interactive game?')
     volunteer_work = models.StringField(choices=[['Yes regularly', 'Yes regularly'], ['Yes but not regularly', 'Yes but not regularly'], ['No', 'No']], label='Do you engage in volunteer work in your community?')
     residence = models.StringField(choices=[['City', 'City'], ['Accessible town', 'Accessible town'], ['Remote town', 'Remote town'], ['Accessible rural', 'Accessible rural'], ['Remote rural', 'Remote rural']], label='Where do you reside?')
-    sid = models.StringField(label='Staff Identification Number (SID)')
+    sid = models.StringField(label='Staff Identification Number (SID), or email address for PhD students without one')
 class Questionnaire(Page):
     form_model = 'player'
     form_fields = ['sid', 'age', 'gender', 'residence', 'years_service', 'people_known', 'lottery_understanding', 'interative_understanding', 'interactive_others', 'volunteer_work']
