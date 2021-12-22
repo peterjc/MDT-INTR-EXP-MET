@@ -18,8 +18,8 @@ class Group(BaseGroup):
     pass
 def lottery_choices(player):
     return [
-        [True, f'A: 🔴 = {Constants.payoff_red_A}, ⚪ = {Constants.payoff_white_A}'],
-        [False, f'B: 🔴 = {Constants.payoff_red_B}, ⚪ = {Constants.payoff_white_B}']
+        [True, f'A: 🔴 = {Constants.payoff_red_A}, ⚪ = {Constants.payoff_white_A} points'],
+        [False, f'B: 🔴 = {Constants.payoff_red_B}, ⚪ = {Constants.payoff_white_B} points']
     ]
 def lottery1_choices(player):
     return lottery_choices(player)
@@ -48,16 +48,16 @@ def consent_error_message(player, value):
     if not value:
         return "You must consent in order to take part."
 class Player(BasePlayer):
-    lottery1 = models.BooleanField()
-    lottery2 = models.BooleanField()
-    lottery3 = models.BooleanField()
-    lottery4 = models.BooleanField()
-    lottery5 = models.BooleanField()
-    lottery6 = models.BooleanField()
-    lottery7 = models.BooleanField()
-    lottery8 = models.BooleanField()
-    lottery9 = models.BooleanField()
-    lottery10 = models.BooleanField()
+    lottery1 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery2 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery3 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery4 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery5 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery6 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery7 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery8 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery9 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery10 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
     lottery_understanding = models.IntegerField(min=0)
