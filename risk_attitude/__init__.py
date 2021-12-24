@@ -81,6 +81,12 @@ class Introduction(Page):
         return {"units": units, "rate": rate}
 class LotteryInstructions(Page):
     form_model = 'player'
+    @staticmethod
+    def vars_for_template(player):
+        choices = dict(lottery_choices(player))
+        return {
+            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
+        }
 class LotteryUnderstanding(Page):
     form_model = 'player'
     form_fields = ['lottery_understanding']

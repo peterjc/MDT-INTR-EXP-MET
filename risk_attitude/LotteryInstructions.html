@@ -3,7 +3,33 @@
 
 {{ block content }}
 
-<p>Now we will play the first game. In this game you will be asked to make 10 decisions, one after the other in rows.</p>
+<p>Now we will play the first game. In this game you will be asked to make 10 decisions, one after the other in rows like this:</p>
+
+<!-- should avoid repeating this CSS -->
+<style>
+.lottery{
+border: 2px solid red;
+border-radius:10px;
+padding:0px;
+width:8.3em;
+height:3.4em;
+text-align:center;
+vertical-align:baseline;
+}
+</style>
+
+<table class="table">
+    <thead>
+        <th>Red/white ratio</th><th>Lottery A or B?</th>
+    </thead>
+    <tr>
+        <td><div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
+        <td>{{ lottery_payoffs }}
+        </td>
+    </tr>
+</table>
+
+<p>In each lottery a red or white ball will be drawn randomly from the 10 balls shown, and the colour determines the number of points awarded. In this example there are 3 red and 7 white balls.</p>
 <p>Your task is to decide between two alternative lotteries, A and B. The lotteries differ in the number of points that can be won in each of them. Each of the 10 decisions bear a different chance of earning points; the number of points to be won also varies between lottery A and B in each of the 10 decisions.</p>
 <p>At the end of the session today, the computer will randomly select one of the 10 rows to execute for real for each of you. The other nine rows will be ignored and you will not get any money from them. Each of the 10 rows is equally likely to be selected. After selecting a row, the computer will execute your selected lottery (A or B) for that decision, and you will be paid accordingly.</p>
 <p>Do you have any questions?</p>
