@@ -3,10 +3,10 @@ from otree.api import *
 c = cu
 
 doc = 'Show questionnaire (and collect payment details), report payoffs from previous apps.'
-class Constants(BaseConstants):
-    name_in_url = 'questionnaire_and_payment'
-    players_per_group = None
-    num_rounds = 1
+class C(BaseConstants):
+    NAME_IN_URL = 'questionnaire_and_payment'
+    PLAYERS_PER_GROUP = None
+    NUM_ROUNDS = 1
 class Subsession(BaseSubsession):
     pass
 class Group(BaseGroup):
@@ -28,7 +28,7 @@ class Questionnaire(Page):
 class Payments(Page):
     form_model = 'player'
     @staticmethod
-    def vars_for_template(player):
+    def vars_for_template(player: Player):
         participant = player.participant
         # The risk_attitude & volunteer_community_centre app recorded these strings:
         return {
