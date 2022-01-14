@@ -58,7 +58,7 @@ def lottery10_choices(player: Player):
     return lottery_choices(player)
 def lottery_understanding_error_message(player: Player, value):
     if value != C.PAYOFF_WHITE_A:
-        return f"Your answer is wrong. For lottery A you have a 30% probability of earning {cu(C.PAYOFF_RED_A)} (if a red ball is extracted) and a 70% probability of earning {cu(C.PAYOFF_WHITE_A)} (if a white ball is extracted). Since a white ball was extracted, you earn {cu(C.PAYOFF_WHITE_A)}"
+        return f"Actually, you would earn {cu(C.PAYOFF_WHITE_A)}. For lottery A you had 3 chances out of 10 to earn {cu(C.PAYOFF_RED_A)} (if a red ball was extracted) and 7 chances out of 10 to earn {cu(C.PAYOFF_WHITE_A)} (if a white ball was extracted). Since a white ball was extracted, you earn {cu(C.PAYOFF_WHITE_A)}."
 def consent_error_message(player: Player, value):
     if not value:
         return "You must consent in order to take part, otherwise please close this tab."
@@ -145,12 +145,12 @@ class LotteryDecision(Page):
         
         # Finally, record message for the final app report
         participant.risk_attitude_msg = (
-            f"In the lottery game, the computer picked lottery {lottery_selected}. "
+            f"In the lottery game, the computer picked decision {lottery_selected}. "
             f"In this decision, you selected lottery {'A' if lottery_choice else 'B'}, "
             f"meaning that you could earn {cu(C.PAYOFF_RED_A  if lottery_choice else C.PAYOFF_RED_B)} "
-            f"with {10 * lottery_selected}% probability (red), "
+            f"with {lottery_selected} chances out of 10 (red), "
             f"and {cu(C.PAYOFF_WHITE_A if lottery_choice else C.PAYOFF_WHITE_B)} "
-            f"with {100 - 10 * lottery_selected}% probability (white). "
+            f"with {10 - lottery_selected} chances out of 10 (white). "
             f"The computer extracted a {'red' if lottery_red else 'white'} ball, "
             f"meaning that you earned <b>{player.payoff}</b>."
         )
