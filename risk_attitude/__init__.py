@@ -61,7 +61,7 @@ def lottery_understanding_error_message(player: Player, value):
         return f"Your answer is wrong. For lottery A you have a 30% probability of earning {cu(C.PAYOFF_RED_A)} (if a red ball is extracted) and a 70% probability of earning {cu(C.PAYOFF_WHITE_A)} (if a white ball is extracted). Since a white ball was extracted, you earn {cu(C.PAYOFF_WHITE_A)}"
 def consent_error_message(player: Player, value):
     if not value:
-        return "You must consent in order to take part."
+        return "You must consent in order to take part, otherwise please close this tab."
 class InfoSheetAndConsent(Page):
     form_model = 'player'
     form_fields = ['consent']
