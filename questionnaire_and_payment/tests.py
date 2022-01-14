@@ -11,7 +11,6 @@ class PlayerBot(Bot):
             "sid": "ab12345",
             "years_service": 0,
             "residence": "City",
-            "people_known": "Around half",
             "lottery_understanding": "Average",
             "interative_understanding": "Average",
             "interactive_others": "Difficult to say",
