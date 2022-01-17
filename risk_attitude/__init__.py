@@ -17,45 +17,20 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 class Player(BasePlayer):
-    lottery1 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery2 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery3 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery4 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery5 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery6 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery7 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery8 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery9 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
-    lottery10 = models.BooleanField(widget=widgets.RadioSelectHorizontal)
+    lottery1 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery2 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery3 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery4 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery5 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery6 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery7 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery8 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery9 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
+    lottery10 = models.BooleanField(choices=[[True, 'Lottery A'], [False, 'Lottery B']], widget=widgets.RadioSelect)
     lottery_selected = models.IntegerField()
     lottery_red = models.BooleanField()
     lottery_understanding = models.IntegerField(min=0)
     consent = models.BooleanField()
-def lottery_choices(player: Player):
-    return [
-        [True, f'A: 🔴 = {C.PAYOFF_RED_A}, ⚪ = {C.PAYOFF_WHITE_A} points'],
-        [False, f'B: 🔴 = {C.PAYOFF_RED_B}, ⚪ = {C.PAYOFF_WHITE_B} points']
-    ]
-def lottery1_choices(player: Player):
-    return lottery_choices(player)
-def lottery2_choices(player: Player):
-    return lottery_choices(player)
-def lottery3_choices(player: Player):
-    return lottery_choices(player)
-def lottery4_choices(player: Player):
-    return lottery_choices(player)
-def lottery5_choices(player: Player):
-    return lottery_choices(player)
-def lottery6_choices(player: Player):
-    return lottery_choices(player)
-def lottery7_choices(player: Player):
-    return lottery_choices(player)
-def lottery8_choices(player: Player):
-    return lottery_choices(player)
-def lottery9_choices(player: Player):
-    return lottery_choices(player)
-def lottery10_choices(player: Player):
-    return lottery_choices(player)
 def lottery_understanding_error_message(player: Player, value):
     if value != C.PAYOFF_WHITE_A:
         return f"Actually, you would earn {cu(C.PAYOFF_WHITE_A)}. For lottery A you had 3 chances out of 10 to earn {cu(C.PAYOFF_RED_A)} (if a red ball was extracted) and 7 chances out of 10 to earn {cu(C.PAYOFF_WHITE_A)} (if a white ball was extracted). Since a white ball was extracted, you earn {cu(C.PAYOFF_WHITE_A)}."
@@ -81,12 +56,6 @@ class Introduction(Page):
         return {"units": units, "rate": rate}
 class LotteryInstructions(Page):
     form_model = 'player'
-    @staticmethod
-    def vars_for_template(player: Player):
-        choices = dict(lottery_choices(player))
-        return {
-            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
-        }
 class LotteryUnderstanding(Page):
     form_model = 'player'
     form_fields = ['lottery_understanding']
@@ -94,22 +63,25 @@ class LotteryUnderstanding(Page):
     def vars_for_template(player: Player):
         from otree.settings import POINTS_CUSTOM_NAME
         units = POINTS_CUSTOM_NAME if POINTS_CUSTOM_NAME else "points"
-        choices = dict(lottery_choices(player))
         return {
-            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
             "lottery_understanding_label": f'How many {units} would you earn?',
         }
 class LotteryUnderstood(Page):
     form_model = 'player'
-    @staticmethod
-    def vars_for_template(player: Player):
-        choices = dict(lottery_choices(player))
-        return {
-            "lottery_payoffs": f'{choices[True]} &nbsp;&nbsp; {choices[False]}',
-        }
 class LotteryDecision(Page):
     form_model = 'player'
     form_fields = ['lottery1', 'lottery2', 'lottery3', 'lottery4', 'lottery5', 'lottery6', 'lottery7', 'lottery8', 'lottery9', 'lottery10']
+    @staticmethod
+    def vars_for_template(player: Player):
+        vars = {}
+        for lottery in range(10):
+            # e.g. "<p>🔴 ⚪ ⚪ ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p>"
+            balls = " ".join(["🔴"] * (lottery + 1) + ["⚪"] * (9 - lottery))
+            balls = f"<p>{balls[:9]}<br/>{balls[10:]}</p>"
+            vars[f"lottery{lottery + 1}"] = f'<div class="lottery">{balls}</div>'
+        vars["pointsA"] = f"<p>🔴 = {C.PAYOFF_RED_A}, ⚪ = {C.PAYOFF_WHITE_A} points</p>"
+        vars["pointsB"] = f"<p>🔴 = {C.PAYOFF_RED_B}, ⚪ = {C.PAYOFF_WHITE_B} points</p>"
+        return vars
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         participant = player.participant

@@ -17,15 +17,20 @@ vertical-align:baseline;
 </style>
 
 <p>Correct:</p>
-<table class="table" style="width:auto; text-align:center;">
-    <thead>
-        <th>Red/white ratio</th><th>Lottery A or B?</th>
-    </thead>
-    <tr>
-        <td><div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div></td>
-        <td>{{ lottery_payoffs }}
-        </td>
-    </tr>
+<table class="table">
+  <thead>
+    <th>Lottery A</th><th>Lottery B</th>
+  </thead>
+  <tbody>
+    <td>
+      <div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div>
+      <p>🔴 = {{ C.PAYOFF_RED_A }}, ⚪ = {{ C.PAYOFF_WHITE_A }} points</p>
+    </td>
+    <td>
+      <div class="lottery"><p>🔴 🔴 🔴 ⚪ ⚪<br />⚪ ⚪ ⚪ ⚪ ⚪</p></div>
+    <p>🔴 = {{ C.PAYOFF_RED_B }}, ⚪ = {{ C.PAYOFF_WHITE_B }} points</p>
+    </td>
+  </tbody>
 </table>
 <p>
 If the above decision was selected by the computer, you had chosen lottery A, and the computer extracted a white ball, then yes: Your payoff would be {{ C.PAYOFF_WHITE_A|cu }}.
