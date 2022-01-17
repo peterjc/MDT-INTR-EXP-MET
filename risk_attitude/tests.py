@@ -7,7 +7,7 @@ class PlayerBot(Bot):
     def play_round(self):
         expect("Macaulay Development Trust", "in", self.html)
         expect(
-            "We foresee an average payment of £25, including a participation fee of £5",
+            "We foresee an average payment of £25.00, including a participation fee of £5.00",
             "in",
             self.html,
         )
