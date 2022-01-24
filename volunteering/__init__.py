@@ -98,7 +98,7 @@ class Instructions(Page):
         </ol>
         </p>
         <p>
-        Do you have any questions? If so, please ask us the <i>Host</i> using the video conference chat function, and the experimenter will answer your question for everyone.
+        Do you have any questions? If so, please ask the <i>Host</i> using the video conference chat function, and the experimenter will answer your question for everyone.
         </p>
         <p>
         Now please click ‘Next’, and you will be redirected to a page with questions to check your understanding of the instructions.
@@ -229,7 +229,7 @@ class Results(Page):
         <li>None of the {C.PLAYERS_PER_GROUP} participants in your group volunteers: you and the other 5 participants each receive {cu(0)}.</li>
         </ol>
         </p>
-        <p>Do you have any questions? If so, please ask us the <i>Host</i> using the video conference chat function, and the experimenter will answer your question for everyone.</p>
+        <p>Do you have any questions? If so, please ask the <i>Host</i> using the video conference chat function, and the experimenter will answer your question for everyone.</p>
         <p>The third round will start when everyone in your group has clicked on the ‘Next’ button below, which will redirect you to a new page with the countdown. Again, you can volunteer for your group by clicking on the ‘Volunteer’ button. When you are ready, please click on the ‘Next’ button below. The instructions will remain available at the bottom of the page.</p>
         """
         elif player.round_number == 3:
