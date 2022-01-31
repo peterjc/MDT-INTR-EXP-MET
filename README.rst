@@ -74,3 +74,14 @@ The default configuration offers multiple suggested sessions:
 
 We run parallel sessions for each framing, giving control over which session,
 and thus which framing, each participant is assigned to.
+
+Deployment
+----------
+
+The game was run in late January and early February 2022 with staff and PhD
+students at the James Hutton Institute over a Webex video conference event
+(configured so the participants could not see, hear, chat to, or even know
+the names of the other participants).
+
+This ran under oTree 5.6.0 on Heroku paid hosting via oTree Hub, as per the
+recommendations in the oTree documentation.
