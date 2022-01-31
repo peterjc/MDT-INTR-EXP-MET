@@ -1,12 +1,15 @@
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5928006.svg
+   :alt: Zenodo DOI
+   :target: https://doi.org/10.5281/zenodo.5928006
+.. image:: https://img.shields.io/github/license/peterjc/MDT-INTR-EXP-MET.svg
+   :alt: MIT License
+   :target: https://github.com/peterjc/MDT-INTR-EXP-MET/blob/master/LICENSE.rst
 .. image:: https://results.pre-commit.ci/badge/github/peterjc/MDT-INTR-EXP-MET/master.svg
-   :target: https://results.pre-commit.ci/latest/github/peterjc/MDT-INTR-EXP-MET/master
    :alt: pre-commit.ci status
+   :target: https://results.pre-commit.ci/latest/github/peterjc/MDT-INTR-EXP-MET/master
 .. image:: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml/badge.svg
    :alt: GitHub Actions Continous Integration Status
    :target: https://github.com/peterjc/MDT-INTR-EXP-MET/actions/workflows/github-actions.yml
-.. image:: https://img.shields.io/github/license/peterjc/MDT-INTR-EXP-MET.svg
-   :alt: MIT License
-   :target: https://github.com/peterjc/thapbi-pict/blob/master/LICENSE.rst
 
 Economics behavioural experiment using oTree
 ============================================
