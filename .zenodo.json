@@ -1,0 +1,33 @@
+{
+    "language": "eng",
+    "license": "MIT",
+    "upload_type": "software",
+    "creators": [
+        {
+            "orcid": "0000-0001-9513-9993",
+            "affiliation": "The James Hutton Institute",
+            "name": "Peter Cock"
+        },
+        {
+            "orcid": "0000-0001-5029-1895",
+            "affiliation": "The James Hutton Institute",
+            "name": "Laure Kuhfuss"
+        },
+        {
+            "orcid": "0000-0002-3122-4870",
+            "affiliation": "The James Hutton Institute",
+            "name": "James Gurd"
+        },
+        {
+            "orcid": "0000-0003-0334-6800",
+            "affiliation": "The James Hutton Institute",
+            "name": "Simone Piras"
+        }
+    ],
+    "keywords": [
+        "oTree",
+        "economics experiment",
+        "volunteering game",
+        "risk attitudes"
+    ]
+}
