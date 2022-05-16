@@ -35,7 +35,7 @@ repos:
             'flake8-implicit-str-concat',
          ]
 -   repo: https://github.com/myint/rstcheck
-    rev: v5.0.0
+    rev: v6.0.0a1
     hooks:
     -   id: rstcheck
         args: [
