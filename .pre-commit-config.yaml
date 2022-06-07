@@ -39,5 +39,5 @@ repos:
     hooks:
     -   id: rstcheck
         args: [
-            --report=warning,
+            --report-level=warning,
         ]
